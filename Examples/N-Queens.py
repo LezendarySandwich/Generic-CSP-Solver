@@ -31,4 +31,7 @@ for i in range (n):
     dom.append(i + 1)
 a.Domain(dom)
 a.constraints()
-a.solve(1)
+a.solve()
+print(a.createRandomInstance())
+print(a.createRandomInstance())
+print(a.createRandomInstance())
