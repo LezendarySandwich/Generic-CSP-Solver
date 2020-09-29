@@ -14,6 +14,7 @@ def BackTrack(obj, Ordering):
     Values = []
     for value in obj.domains[cur]:
         curr = 0
+        obj.value[cur] = value
         for neighbour in obj.graph[cur]:
             if obj.givenValue[neighbour[0]] == True:
                 continue
@@ -28,7 +29,7 @@ def BackTrack(obj, Ordering):
         Removed = []
         obj.value[cur] = value[1]
         for neighbour in obj.graph[cur]:
-            if obj.givenValue[neighbour[0]] == True:
+            if obj.givenValue[neighbour[0]]:
                 continue
             for Nval in obj.domains[neighbour[0]]:
                 obj.value[neighbour[0]] = Nval

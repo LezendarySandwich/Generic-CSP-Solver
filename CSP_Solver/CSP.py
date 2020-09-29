@@ -1,4 +1,4 @@
-import random
+import random, time
 from datetime import datetime
 from .BackTrack import BackTrack
 from .dfs import dfs
@@ -9,7 +9,7 @@ class CSP:
         self.variables = variables
         self.domains = [set() for i in range(variables + 1)]
         self.graph = [[] for i in range(variables + 1)]
-        self.value = [0 for i in range(variables + 1)]
+        self.value = [None for i in range(variables + 1)]
         self.givenValue = [False for i in range(variables + 1)]
         self.domainHelp = [[] for i in range(variables + 1)]
         self.stop = 0
@@ -28,10 +28,10 @@ class CSP:
         self.graph[n1].append([n2,comparison])
         self.graph[n2].append([n1,comparison])
     def solve(self):
-        BackTrack(self)
-        self.reset()
-        dfs(self)
-        self.reset()
+        # BackTrack(self)
+        # self.reset()
+        # dfs(self)
+        # self.reset()
         orderedBackTrack_MRV_LCV(self)
 
     def createRandomInstance(self):
@@ -43,7 +43,7 @@ class CSP:
         return Instance
     def reset(self):
         self.stop = 0
-        self.value = [0 for i in range(self.variables + 1)]
+        self.value = [None for i in range(self.variables + 1)]
         self.givenValue = [False for i in range(self.variables + 1)]
         self.domains = [set(self.domainHelp[i]) for i in range(self.variables + 1)]
 
