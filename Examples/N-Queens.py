@@ -24,7 +24,7 @@ def constraints(self):
             self.add(i,j,'abs(value[j] - value[i]) != j - i','i','j')
 
 CSP.constraints = constraints
-n = 10
+n = 7
 a = CSP(n)
 dom = []
 for i in range (n):
@@ -32,6 +32,3 @@ for i in range (n):
 a.Domain(dom)
 a.constraints()
 a.solve()
-print(a.createRandomInstance())
-print(a.createRandomInstance())
-print(a.createRandomInstance())

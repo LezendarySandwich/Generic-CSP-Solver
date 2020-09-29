@@ -1,8 +1,9 @@
-import sys
-sys.path.append(".")
+
 import random
 from datetime import datetime
-from . import BackTrack
+from .BackTrack import BackTrack
+from .dfs import dfs
+
 class CSP:
     def __init__(self, variables):
         self.variables = variables
@@ -25,7 +26,9 @@ class CSP:
         comparison = comparison.replace('value','obj.value')
         self.graph[n1].append([n2,comparison])
     def solve(self):
-        BackTrack.BackTrack(self, 1)
+        BackTrack(self, 1)
+        self.reset()
+        dfs(self, 1)
     def createRandomInstance(self):
         random.seed(datetime.now())
         Instance = [-1]
@@ -35,5 +38,5 @@ class CSP:
         return Instance
     def reset(self):
         self.stop = 0
-        self.value = [0 for i in range(variables + 1)]
+        self.value = [0 for i in range(self.variables + 1)]
 
