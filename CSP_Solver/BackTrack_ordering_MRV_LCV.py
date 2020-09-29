@@ -1,16 +1,16 @@
-from sortedcontainers import SortedList
 from .verifySolution import verify
+from .MRV_manager import MRV
 
-def BackTrack(obj, Ordering):
-    if len(Ordering) == 0:
+def BackTrack(obj, Mrv):
+    if Mrv.finished():
         obj.stop = 1
         print(obj.value[1:obj.variables+1])
         return
-    current = Ordering[0]
+    current = Mrv.minimum()
     cur = current[1]
     if len(obj.domains[cur]) == 0:
         return 
-    Ordering.discard(Ordering[0])
+    Mrv.remove(current)
     Values = []
     for value in obj.domains[cur]:
         curr = 0
@@ -36,24 +36,19 @@ def BackTrack(obj, Ordering):
                 if not eval(neighbour[1]):
                     Removed.append((neighbour[0], Nval))
         for rem in Removed:
-            Ordering.remove((len(obj.domains[rem[0]]), rem[0]))
+            Mrv.decrease((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].discard(rem[1])
-            Ordering.add((len(obj.domains[rem[0]]), rem[0]))
-        BackTrack(obj, Ordering)
+        BackTrack(obj, Mrv)
         if obj.stop:
             return 
         for rem in Removed:
-            Ordering.remove((len(obj.domains[rem[0]]), rem[0]))
+            Mrv.increase((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].add(rem[1])
-            Ordering.add((len(obj.domains[rem[0]]), rem[0]))
-    Ordering.add(current)
+    Mrv.add(current)
     obj.givenValue[cur] = False
 
-
 def orderedBackTrack_MRV_LCV(obj):
-    Ordering = SortedList()
-    for i in range(1,obj.variables + 1):
-        Ordering.add((len(obj.domains[i]),i))
-    BackTrack(obj, Ordering)
+    Mrv = MRV(obj)
+    BackTrack(obj, Mrv)
     if not verify(obj):
         raise Exception("Computed Answer does not satisfy all the constraints")

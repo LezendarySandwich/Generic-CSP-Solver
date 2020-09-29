@@ -36,7 +36,7 @@ class CSP:
 
     def createRandomInstance(self):
         random.seed(datetime.now())
-        Instance = [-1]
+        Instance = [None]
         for i in range(1,self.variables + 1):
             rand = random.randint(0,len(self.domains[i])-1)
             Instance.append(self.domainHelp[i][rand])
