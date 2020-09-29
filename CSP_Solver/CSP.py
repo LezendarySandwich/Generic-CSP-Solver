@@ -1,4 +1,3 @@
-import re
 class CSP:
     def __init__(self, variables):
         self.variables = variables
@@ -42,18 +41,3 @@ class CSP:
         self.stop = 0
         self.value = [0 for i in range(variables + 1)]
 
-def constraints(self):
-    for i in range(1,self.variables+1):
-        for j in range(i+1,self.variables+1):
-            self.add(i,j,'value[i] != value[j]','i','j')
-            self.add(i,j,'abs(value[j] - value[i]) != j - i','i','j')
-
-CSP.constraints = constraints
-n = 4
-a = CSP(n)
-dom = []
-for i in range (n):
-    dom.append(i + 1)
-a.Domain(dom)
-a.constraints()
-a.solve(1)
