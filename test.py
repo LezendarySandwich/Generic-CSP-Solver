@@ -25,5 +25,13 @@
 
 #     # Cleanup
 
-list = [1,2,3,4]
-list[0] = "fsdfs"
+# list = [1,2,3,4]
+# list[0] = "fsdfs"
+# a = (1,1)
+# a[0] += 1
+# print(a)
+import random
+ss = set()
+for i in range(10):
+    ss.add(i)
+print(random.choice(tuple(ss)))

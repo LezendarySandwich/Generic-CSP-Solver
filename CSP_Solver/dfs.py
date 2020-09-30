@@ -1,4 +1,4 @@
-from .verifySolution import verify
+from .Util import verify
 
 def BackTracking(obj, cur):
     if cur > obj.variables:
@@ -6,7 +6,7 @@ def BackTracking(obj, cur):
             obj.stop = 1
             print(obj.value[1:obj.variables+1])
         return
-    for value in obj.domains[cur]:
+    for value in obj.domainHelp[cur]:
         obj.givenValue[cur] = False
         obj.value[cur] = value
         BackTracking(obj, cur + 1)

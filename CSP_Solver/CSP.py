@@ -3,6 +3,7 @@ from datetime import datetime
 from .BackTrack import BackTrack
 from .dfs import dfs
 from .BackTrack_ordering_MRV_LCV import orderedBackTrack_MRV_LCV
+from .BackTracking_MRV import orderedBackTrack_MRV
 
 class CSP:
     def __init__(self, variables):
@@ -28,11 +29,13 @@ class CSP:
         self.graph[n1].append([n2,comparison])
         self.graph[n2].append([n1,comparison])
     def solve(self):
-        # BackTrack(self)
-        # self.reset()
-        # dfs(self)
-        # self.reset()
+        BackTrack(self)
+        self.reset()
+        dfs(self)
+        self.reset()
         orderedBackTrack_MRV_LCV(self)
+        self.reset()
+        orderedBackTrack_MRV(self)
 
     def createRandomInstance(self):
         random.seed(datetime.now())
@@ -41,6 +44,7 @@ class CSP:
             rand = random.randint(0,len(self.domains[i])-1)
             Instance.append(self.domainHelp[i][rand])
         return Instance
+
     def reset(self):
         self.stop = 0
         self.value = [None for i in range(self.variables + 1)]

@@ -1,4 +1,4 @@
-from .Util import MRV, LCV, toRemove, verify
+from .Util import MRV, toRemove, verify
 
 def BackTrack(obj, Mrv):
     if Mrv.finished():
@@ -10,10 +10,9 @@ def BackTrack(obj, Mrv):
     if len(obj.domains[cur]) == 0:
         return 
     Mrv.remove(current)
-    Values = LCV(obj, cur)
     obj.givenValue[cur] = True
-    for value in Values:
-        Removed = toRemove(obj, cur, value[1])
+    for value in obj.domains[cur]:
+        Removed = toRemove(obj, cur, value)
         for rem in Removed:
             Mrv.decrease((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].discard(rem[1])
@@ -26,7 +25,7 @@ def BackTrack(obj, Mrv):
     Mrv.add(current)
     obj.givenValue[cur] = False
 
-def orderedBackTrack_MRV_LCV(obj):
+def orderedBackTrack_MRV(obj):
     Mrv = MRV(obj)
     BackTrack(obj, Mrv)
     if not verify(obj):
