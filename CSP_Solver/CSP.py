@@ -10,6 +10,7 @@ from .Hill_Climbing_with_restarts import Hill_Climbing_with_restarts
 from .Hill_Climbing_with_memoisation import HillClimbing_with_memoisation
 class CSP:
     def __init__(self, variables):
+        random.seed(datetime.now())
         self.variables = variables
         self.domains = [set() for i in range(variables + 1)]
         self.graph = [set() for i in range(variables + 1)]
@@ -65,16 +66,15 @@ class CSP:
         # print("Time for ForwardChecking is :" , end - start)
         # HillClimbing_with_memoisation(self)
         start = time.time()
-        Hill_Climbing_with_restarts(self, memoisation=False)
+        Hill_Climbing_with_restarts(self, memoisation=False, allowedSideMoves = 20)
         end = time.time()
         print("Time for Hill Climbing without memoisation is :" , end - start)
         start = time.time()
-        Hill_Climbing_with_restarts(self, memoisation=True)
+        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=20)
         end = time.time()
         print("Time for Hill Climbing with memoisation is :" , end - start)
 
     def createRandomInstance(self):
-        random.seed(datetime.now())
         for i in range(1,self.variables + 1):
             rand = random.randint(0,len(self.domains[i])-1)
             self.value[i] = self.domainHelp[i][rand]

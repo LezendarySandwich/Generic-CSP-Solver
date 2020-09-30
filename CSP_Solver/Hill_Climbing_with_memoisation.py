@@ -1,8 +1,9 @@
 """ 
 heuristic : Number of constraints satisfied
 """
-import copy
+import random
 from . import Util as ut
+from .Hill_Climbing import FastVerify
 
 def writeFaults(obj, Faults, cur, known, add = 1):
     if (cur, obj.value[cur]) in known:
@@ -27,23 +28,26 @@ def deleteFaults(obj, Faults, cur, known):
 
 def findBest(obj, Faults):
     mn = ut.big
-    best = (None, None)
+    best = []
     for va in range(obj.variables + 1):
         for value in obj.domainHelp[va]:
             if mn > Faults[va][value] - Faults[va][obj.value[va]]:
                 mn = Faults[va][value] - Faults[va][obj.value[va]]
-                best = (va, value)
-    return best, mn
+                best = [(va, value)]
+            elif mn == Faults[va][value] - Faults[va][obj.value[va]]:
+                best.append((va,value))
+    Best = random.choice(best)
+    return Best, mn
 
-def Iter(obj, Faults, known):
+def Iter(obj, Faults, known, allowedSideMoves):
     best, mn = findBest(obj, Faults)
-    if mn >= 0:
-        return False
+    if mn > 0 or (mn == 0 and allowedSideMoves <= 0):
+        return False, 0
     (va, val) = best
     deleteFaults(obj, Faults, va, known)
     obj.value[va] = val
     writeFaults(obj, Faults, va, known)
-    return True
+    return True, -1 if mn == 0 else 0
 
 def defaultFaults(obj, known):
     Faults = [dict() for i in range(obj.variables + 1)]
@@ -54,13 +58,15 @@ def defaultFaults(obj, known):
         writeFaults(obj, Faults, i, known)
     return Faults
 
-def HillClimbing_with_memoisation(obj, known = dict()):
+def HillClimbing_with_memoisation(obj, known = dict(), allowedSideMoves = 0):
     obj.createRandomInstance()
     Faults = defaultFaults(obj, known)
-    tot = 0
-    while Iter(obj, Faults, known):
-        pass
-    if not ut.verify(obj):
+    while True:
+        cont, neg = Iter(obj, Faults, known, allowedSideMoves)
+        if not cont:
+            break
+        allowedSideMoves += neg
+    if not FastVerify(obj, Faults):
         print("Answer does not satisfy all constraints")
         return False
     else :
