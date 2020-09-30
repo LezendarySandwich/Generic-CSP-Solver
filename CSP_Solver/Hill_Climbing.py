@@ -5,13 +5,11 @@ import copy
 from . import Util as ut
 
 def writeFaults(obj, Faults, cur, add = 1):
-    for va in range(1,obj.variables + 1):
-        if va == cur:
-            continue
+    for va in obj.graph[cur]:
         previousVal = obj.value[va]
         for value in obj.domains[va]:
             obj.value[va] = value
-            for constraint in obj.Constraints[cur][va]:
+            for constraint in obj.graphConstraints[cur][va]:
                 if not eval(constraint):
                     Faults[va][value] += add
                     break

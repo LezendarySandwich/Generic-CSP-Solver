@@ -29,12 +29,14 @@ def LCV(obj, cur):
         curr = 0
         obj.value[cur] = value
         for neighbour in obj.graph[cur]:
-            if obj.givenValue[neighbour[0]] == True:
+            if obj.givenValue[neighbour] == True:
                 continue
-            for Nval in obj.domains[neighbour[0]]:
-                obj.value[neighbour[0]] = Nval
-                if not eval(neighbour[1]):
-                    curr += 1
+            for Nval in obj.domains[neighbour]:
+                obj.value[neighbour] = Nval
+                for constraint in obj.graphConstraints[cur][neighbour]:
+                    if not eval(constraint):
+                        curr += 1
+                        break
         Values.append((curr, value))
     Values.sort()
     return Values
@@ -43,19 +45,18 @@ def toRemove(obj, cur, value):
     Removed = []
     obj.value[cur] = value
     for neighbour in obj.graph[cur]:
-        if obj.givenValue[neighbour[0]]:
+        if obj.givenValue[neighbour]:
             continue
-        for Nval in obj.domains[neighbour[0]]:
-            obj.value[neighbour[0]] = Nval
-            if not eval(neighbour[1]):
-                Removed.append((neighbour[0], Nval))
+        for Nval in obj.domains[neighbour]:
+            obj.value[neighbour] = Nval
+            for constraint in obj.graphConstraints[cur][neighbour]:
+                if not eval(constraint):
+                    Removed.append((neighbour, Nval))
+                    break
     return Removed
 
 def verify(obj, getFault = False):
-    for i in range(1,obj.variables + 1):
-        for neighbour in obj.graph[i]:
-            if not eval(neighbour[1]):
-                if getFault:
-                    print(neighbour[1])
-                return False
+    for constraint in obj.AllConstraints:
+        if not eval(constraint):
+            return False
     return True

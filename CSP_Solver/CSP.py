@@ -12,12 +12,12 @@ class CSP:
     def __init__(self, variables):
         self.variables = variables
         self.domains = [set() for i in range(variables + 1)]
-        self.graph = [[] for i in range(variables + 1)]
+        self.graph = [set() for i in range(variables + 1)]
         self.value = [None for i in range(variables + 1)]
         self.givenValue = [False for i in range(variables + 1)]
         self.domainHelp = [[] for i in range(variables + 1)]
-        self.Constraints = [[[] for i in range(variables + 1)] for j in range(variables + 1)]
-        # self.Edges = set()
+        self.graphConstraints = [dict() for i in range(variables + 1)]
+        self.AllConstraints = []
         self.stop = 0
     def Domain(self, domain = []):
         for value in domain:
@@ -31,20 +31,23 @@ class CSP:
         if t2 != None:
             comparison = comparison.replace(t2,str(n2))
         comparison = comparison.replace('value','obj.value')
-        # if [n1,n2,comparison] in self.edges:
-        #     return 
-        self.Constraints[n1][n2].append(comparison)
-        self.Constraints[n2][n1].append(comparison)
-        self.graph[n1].append([n2,comparison])
-        self.graph[n2].append([n1,comparison])
-        # self.edges.add([n1,n2,comparison])
-        # self.edges.add([n2,n1,comparison])
+        if n2 in self.graphConstraints[n1]:
+            self.graphConstraints[n1][n2].add(comparison)
+        else:
+            self.graphConstraints[n1][n2] = {comparison}
+        if n1 in self.graphConstraints[n2]:
+            self.graphConstraints[n2][n1].add(comparison)
+        else:
+            self.graphConstraints[n2][n1] = {comparison}
+        self.graph[n1].add(n2)
+        self.graph[n2].add(n1)
+        self.AllConstraints.append(comparison)
     
     def solve(self):
         # start = time.time()
         # BackTrack(self)
         # end = time.time()
-        # print("Time for BackTracking is :" , end - start)
+        # # print("Time for BackTracking is :" , end - start)
         # self.reset()
         # dfs(self)
         # self.reset()
@@ -61,10 +64,10 @@ class CSP:
         # end = time.time()
         # print("Time for ForwardChecking is :" , end - start)
         # HillClimbing_with_memoisation(self)
-        # start = time.time()
-        # Hill_Climbing_with_restarts(self, memoisation=False)
-        # end = time.time()
-        # print("Time for Hill Climbing without memoisation is :" , end - start)
+        start = time.time()
+        Hill_Climbing_with_restarts(self, memoisation=False)
+        end = time.time()
+        print("Time for Hill Climbing without memoisation is :" , end - start)
         start = time.time()
         Hill_Climbing_with_restarts(self, memoisation=True)
         end = time.time()
