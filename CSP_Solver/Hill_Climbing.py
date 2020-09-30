@@ -1,55 +1,63 @@
 """ 
 heuristic : Number of constraints satisfied
 """
+import copy
 from . import Util as ut
 
-def failedConstraints(obj, cur):
-    failed = 0
-    for neighbour in obj.graph[cur]:
-        if not eval(neighbour[1]):
-            failed += 1
-    return failed
+def writeFaults(obj, Faults, cur, add = 1):
+    for va in range(1,obj.variables + 1):
+        if va == cur:
+            continue
+        previousVal = obj.value[va]
+        for value in obj.domains[va]:
+            obj.value[va] = value
+            for constraint in obj.Constraints[cur][va]:
+                if not eval(constraint):
+                    Faults[va][value] += add
+                    break
+        obj.value[va] = previousVal
 
-def findBest(obj, failedCount):
+def deleteFaults(obj, Faults, cur):
+    writeFaults(obj, Faults, cur, -1)
+
+def findBest(obj, Faults):
     mn = ut.big
     best = (None, None)
-    for va in range(1,obj.variables + 1):
-        previous = obj.value[va]
+    for va in range(obj.variables + 1):
         for value in obj.domainHelp[va]:
-            if value == previous:
-                continue
-            obj.value[va] = value
-            failedVa = failedConstraints(obj, va)
-            if mn > failedVa - failedCount[va]:
-                mn = failedVa - failedCount[va]
+            if mn > Faults[va][value] - Faults[va][obj.value[va]]:
+                mn = Faults[va][value] - Faults[va][obj.value[va]]
                 best = (va, value)
-            if mn < 0:
-                return best , mn
-        obj.value[va] = previous
     return best, mn
 
-def changeState(obj, best):
-    (va, value) = best
-    for neighbour in obj.graph[va]:
-        
+def Iter(obj, Faults):
+    best, mn = findBest(obj, Faults)
+    if mn >= 0:
+        return False
+    (va, val) = best
+    deleteFaults(obj, Faults, va)
+    obj.value[va] = val
+    writeFaults(obj, Faults, va)
+    return True
+
+def defaultFaults(obj):
+    Faults = [dict() for i in range(obj.variables + 1)]
+    for i in range(1,obj.variables + 1):
+        for value in obj.domainHelp[i]:
+            Faults[i][value] = 0
+    for i in range(1,obj.variables + 1):
+        writeFaults(obj, Faults, i)
+    return Faults
 
 def HillClimbing(obj):
     obj.createRandomInstance()
-    failedCount = [failedConstraints(obj,i) for i in range(obj.variables + 1)]
-    # totalFailure = 0
-    # for i in range(1,obj.variables + 1):
-    #     totalFailure += failedCount[i]
-    tot = 0 
-    while True:
-        tot += 1
-        best, mn = findBest(obj, failedCount)
-        if mn >= 0:
-            break
-        (va, value) = best
-        failedCount[va] += mn
-        obj.value[va] = value
+    Faults = defaultFaults(obj)
+    tot = 0
+    while Iter(obj, Faults):
+        pass
     if not ut.verify(obj):
         print("Answer does not satisfy all constraints")
+        return False
     else :
-        print(obj.value[1:obj.variables + 1], failedCount[1:obj.variables+1])
-    print(tot)
+        print(obj.value[1:obj.variables + 1])
+        return True
