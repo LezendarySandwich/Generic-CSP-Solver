@@ -1,5 +1,7 @@
 from sortedcontainers import SortedList
 
+big = 100000000
+
 class MRV:
     def __init__(self, obj):
         self.Ordering = SortedList()
