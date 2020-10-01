@@ -9,6 +9,8 @@ from .ForwardChecking import forwardChecking
 from .Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
 from .Hill_Climbing_with_memoisation import HillClimbing_with_memoisation
 from .Hill_Climbing_choose_random_with_memoisation import HillClimbing_choose_random_with_memoisation
+from .Hill_Climbing_greedyBias_with_memoisation import HillClimbing_greedyBias_with_memoisation
+
 class CSP:
     def __init__(self, variables):
         random.seed(datetime.now())
@@ -84,9 +86,10 @@ class CSP:
         # print("Time for Hill Climbing with memoisation is :" , end - start)
         # HillClimbing_choose_random_with_memoisation(self)
         start = time.time()
-        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=100, choice=choice.chooseRandom)
+        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=250, choice=choice.greedyBias)
         end = time.time()
         print("Time for Hill Climbing with memoisation is :" , end - start)
+        # HillClimbing_greedyBias_with_memoisation(self)
 
     def createRandomInstance(self):
         for i in range(1,self.variables + 1):
