@@ -6,8 +6,9 @@ from .BackTrack_ordering_MRV_LCV import orderedBackTrack_MRV_LCV
 from .BackTracking_MRV import orderedBackTrack_MRV
 from .Hill_Climbing import HillClimbing
 from .ForwardChecking import forwardChecking
-from .Hill_Climbing_with_restarts import Hill_Climbing_with_restarts
+from .Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
 from .Hill_Climbing_with_memoisation import HillClimbing_with_memoisation
+from .Hill_Climbing_choose_random_with_memoisation import HillClimbing_choose_random_with_memoisation
 class CSP:
     def __init__(self, variables):
         random.seed(datetime.now())
@@ -43,7 +44,7 @@ class CSP:
         self.graph[n1].add(n2)
         self.graph[n2].add(n1)
         self.AllConstraints.append(comparison)
-    
+
     def solve(self):
         # start = time.time()
         # BackTrack(self)
@@ -52,9 +53,15 @@ class CSP:
         # print("Time for BackTracking is :" , end - start)
         # dfs(self)
         # self.reset()
+        # start = time.time()
         # orderedBackTrack_MRV_LCV(self)
+        # end = time.time()
+        # print("Time for BackTracking with MRV and LCV is :" , end - start)
         # self.reset()
+        # start = time.time()
         # orderedBackTrack_MRV(self)
+        # end = time.time()
+        # print("Time for BackTracking with MRV is :" , end - start)
         # self.reset()
         # start = time.time()
         # HillClimbing(self)
@@ -71,8 +78,13 @@ class CSP:
         # Hill_Climbing_with_restarts(self, memoisation=False, allowedSideMoves = 20)
         # end = time.time()
         # print("Time for Hill Climbing without memoisation is :" , end - start)
+        # start = time.time()
+        # Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=200)
+        # end = time.time()
+        # print("Time for Hill Climbing with memoisation is :" , end - start)
+        # HillClimbing_choose_random_with_memoisation(self)
         start = time.time()
-        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=50)
+        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=100, choice=choice.chooseRandom)
         end = time.time()
         print("Time for Hill Climbing with memoisation is :" , end - start)
 

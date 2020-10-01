@@ -24,7 +24,7 @@ def constraints(self):
             self.add(i,j,'abs(value[j] - value[i]) != j - i','i','j')
 
 CSP.constraints = constraints
-n = 100
+n = 200
 a = CSP(n)
 dom = []
 for i in range (n):
