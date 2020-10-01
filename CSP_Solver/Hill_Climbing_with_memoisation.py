@@ -1,5 +1,5 @@
 """ 
-heuristic : Number of constraints satisfied
+heuristic : Minimize the number of constraints failed
 """
 import random
 from . import Util as ut
@@ -16,7 +16,7 @@ def writeFaults(obj, Faults, cur, known, add = 1):
             for value in obj.domains[va]:
                 obj.value[va] = value
                 for constraint in obj.graphConstraints[cur][va]:
-                    if not eval(constraint):
+                    if not eval(constraint,{"value":obj.value}):
                         Faults[va][value] += add
                         Vl.append((va, value))
                         break

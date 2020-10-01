@@ -34,7 +34,7 @@ def LCV(obj, cur):
             for Nval in obj.domains[neighbour]:
                 obj.value[neighbour] = Nval
                 for constraint in obj.graphConstraints[cur][neighbour]:
-                    if not eval(constraint):
+                    if not eval(constraint,{"value":obj.value}):
                         curr += 1
                         break
         Values.append((curr, value))
@@ -50,13 +50,13 @@ def toRemove(obj, cur, value):
         for Nval in obj.domains[neighbour]:
             obj.value[neighbour] = Nval
             for constraint in obj.graphConstraints[cur][neighbour]:
-                if not eval(constraint):
+                if not eval(constraint,{"value":obj.value}):
                     Removed.append((neighbour, Nval))
                     break
     return Removed
 
 def verify(obj, getFault = False):
     for constraint in obj.AllConstraints:
-        if not eval(constraint):
+        if not eval(constraint,{"value":obj.value}):
             return False
     return True
