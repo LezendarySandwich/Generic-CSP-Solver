@@ -85,11 +85,19 @@ class CSP:
         # end = time.time()
         # print("Time for Hill Climbing with memoisation is :" , end - start)
         # HillClimbing_choose_random_with_memoisation(self)
+        # start = time.time()
+        # Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=250, choice=choice.greedyBias)
+        # end = time.time()
+        # print("Time for Hill Climbing with memoisation is :" , end - start)
+        # HillClimbing_greedyBias_with_memoisation(self)
+        # start = time.time()
+        # Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=250,tabuSize=200, iterations = 300)
+        # end = time.time()
+        # print("Time for Hill Climbing with memoisation is :" , end - start)
         start = time.time()
-        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=250, choice=choice.greedyBias)
+        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=400,tabuSize=20, iterations = 500, choice=choice.chooseRandom)
         end = time.time()
         print("Time for Hill Climbing with memoisation is :" , end - start)
-        # HillClimbing_greedyBias_with_memoisation(self)
 
     def createRandomInstance(self):
         for i in range(1,self.variables + 1):
