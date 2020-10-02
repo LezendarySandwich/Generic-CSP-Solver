@@ -1,4 +1,4 @@
-from .Util import MRV, LCV, toRemove, verify
+from CSP_Solver.Util import toRemove, MRV
 
 def BackTrack(obj, Mrv):
     if Mrv.finished():
@@ -10,10 +10,9 @@ def BackTrack(obj, Mrv):
     if len(obj.domains[cur]) == 0:
         return 
     Mrv.remove(current)
-    Values = LCV(obj, cur)
     obj.givenValue[cur] = True
-    for value in Values:
-        Removed = toRemove(obj, cur, value[1])
+    for value in obj.domains[cur]:
+        Removed = toRemove(obj, cur, value)
         for rem in Removed:
             Mrv.decrease((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].discard(rem[1])
@@ -26,8 +25,8 @@ def BackTrack(obj, Mrv):
     Mrv.add(current)
     obj.givenValue[cur] = False
 
-def orderedBackTrack_MRV_LCV(obj):
+def ForwardChecking_MRV(obj):
     Mrv = MRV(obj)
     BackTrack(obj, Mrv)
-    if not verify(obj):
-        raise Exception("Computed Answer does not satisfy all the constraints")
+    if not obj.stop:
+        print("No valid Solution Exists")

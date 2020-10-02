@@ -2,9 +2,8 @@
 heuristic : Minimize the number of constraints failed
 """
 import random
-from . import Util as ut
+from CSP_Solver import Util as ut
 from .Hill_Climbing import FastVerify
-from .Util import Tabu
 
 def writeFaults(obj, Faults, cur, known, add = 1):
     if (cur, obj.value[cur]) in known:
@@ -88,7 +87,7 @@ def HillClimbing_with_memoisation(obj, known = dict(), allowedSideMoves = 0, tab
             allowedSideMoves += neg
             iterations -= 1
     else :
-        tabu = Tabu(tabuSize)
+        tabu = ut.Tabu(tabuSize)
         tabu.push(obj)
         while iterations > 0:
             cont, neg = TabuIter(obj, Faults, known, allowedSideMoves, tabu)

@@ -1,4 +1,4 @@
-from .Util import toRemove, verify
+from CSP_Solver.Util import toRemove
 
 def BackTracking(obj, cur):
     if cur > obj.variables:
@@ -21,7 +21,7 @@ def BackTracking(obj, cur):
             obj.domains[rem[0]].add(rem[1])
     obj.givenValue[cur] = False
 
-def forwardChecking(obj):
+def ForwardChecking(obj):
     BackTracking(obj, 1)
-    if not verify(obj):
-        raise Exception("Computed Answer does not satisfy all the constraints")
+    if not obj.stop:
+        print("No valid Solution Exists")

@@ -2,7 +2,7 @@
 heuristic : Minimize the number of constraints failed
 """
 import random
-from . import Util as ut
+from CSP_Solver import Util as ut
 from .Hill_Climbing import FastVerify
 from .Hill_Climbing_with_memoisation import writeFaults, deleteFaults, defaultFaults
 

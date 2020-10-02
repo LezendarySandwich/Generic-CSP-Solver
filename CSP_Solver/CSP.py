@@ -2,14 +2,11 @@ import random, time
 from datetime import datetime
 from .BackTrack import BackTrack
 from .dfs import dfs
-from .BackTrack_ordering_MRV_LCV import orderedBackTrack_MRV_LCV
-from .BackTracking_MRV import orderedBackTrack_MRV
-from .Hill_Climbing import HillClimbing
-from .ForwardChecking import forwardChecking
-from .Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
-from .Hill_Climbing_with_memoisation import HillClimbing_with_memoisation
-from .Hill_Climbing_choose_random_with_memoisation import HillClimbing_choose_random_with_memoisation
-from .Hill_Climbing_greedyBias_with_memoisation import HillClimbing_greedyBias_with_memoisation
+from .Forward_Checking.ForwardChecking import ForwardChecking
+from .Forward_Checking.ForwardChecking_MRV import ForwardChecking_MRV
+from .Forward_Checking.ForwardChecking_MRV_LCV import ForwardChecking_MRV_LCV
+from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
+from .Hill_Climbing.Hill_Climbing import HillClimbing
 
 class CSP:
     def __init__(self, variables):
@@ -48,56 +45,16 @@ class CSP:
         self.AllConstraints.append(comparison)
 
     def solve(self):
-        # start = time.time()
-        # BackTrack(self)
-        # end = time.time()
-        # self.reset()
-        # print("Time for BackTracking is :" , end - start)
-        # dfs(self)
-        # self.reset()
-        # start = time.time()
-        # orderedBackTrack_MRV_LCV(self)
-        # end = time.time()
-        # print("Time for BackTracking with MRV and LCV is :" , end - start)
-        # self.reset()
-        # start = time.time()
-        # orderedBackTrack_MRV(self)
-        # end = time.time()
-        # print("Time for BackTracking with MRV is :" , end - start)
-        # self.reset()
-        # start = time.time()
-        # HillClimbing(self)
-        # end = time.time()
-        # print("Time for Hill-Climbing is :" , end - start)
-        # self.reset()
-        # start = time.time()
-        # forwardChecking(self)
-        # self.reset()
-        # end = time.time()
-        # print("Time for ForwardChecking is :" , end - start)
-        # HillClimbing_with_memoisation(self)
-        # start = time.time()
-        # Hill_Climbing_with_restarts(self, memoisation=False, allowedSideMoves = 20)
-        # end = time.time()
-        # print("Time for Hill Climbing without memoisation is :" , end - start)
-        # start = time.time()
-        # Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=200)
-        # end = time.time()
-        # print("Time for Hill Climbing with memoisation is :" , end - start)
-        # HillClimbing_choose_random_with_memoisation(self)
-        # start = time.time()
-        # Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=250, choice=choice.greedyBias)
-        # end = time.time()
-        # print("Time for Hill Climbing with memoisation is :" , end - start)
-        # HillClimbing_greedyBias_with_memoisation(self)
-        # start = time.time()
-        # Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=250,tabuSize=200, iterations = 300)
-        # end = time.time()
-        # print("Time for Hill Climbing with memoisation is :" , end - start)
         start = time.time()
-        Hill_Climbing_with_restarts(self, memoisation=True, allowedSideMoves=400,tabuSize=20, iterations = 500, choice=choice.chooseRandom)
+        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=20, memoisation=True, choice=choice.greedyBias)
         end = time.time()
-        print("Time for Hill Climbing with memoisation is :" , end - start)
+        self.reset()
+        print("Time for Hill Climbing Tabu search is :" , end - start)
+        start = time.time()
+        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=50, memoisation=True, choice=choice.chooseRandom)
+        end = time.time()
+        self.reset()
+        print("Time for Hill Climbing Tabu search is :" , end - start)
 
     def createRandomInstance(self):
         for i in range(1,self.variables + 1):
