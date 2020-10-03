@@ -2,8 +2,7 @@
 heuristic : Minimize the number of constraints failed
 """
 import random
-from CSP_Solver import Util as ut
-from .Hill_Climbing_Util import writeFaults, deleteFaults, defaultFaults, FastVerify
+from . import Hill_Climbing_Util as ut
 
 def findBest(obj, Faults, va):
     mn = ut.big
@@ -28,9 +27,9 @@ def Iter(obj, Faults, known, allowedSideMoves):
     val, mn = findBest(obj, Faults, va)
     if mn > 0 or (mn == 0 and allowedSideMoves <= 0):
         return False, 0
-    deleteFaults(obj, Faults, va, known)
+    ut.deleteFaults(obj, Faults, va, known)
     obj.value[va] = val
-    writeFaults(obj, Faults, va, known)
+    ut.writeFaults(obj, Faults, va, known)
     return True, -1 if mn == 0 else 0
 
 def TabuIter(obj, Faults, known, allowedSideMoves, tabu):
@@ -51,14 +50,16 @@ def TabuIter(obj, Faults, known, allowedSideMoves, tabu):
     else:
         tabu.push(obj)
     obj.value[va] = previous
-    deleteFaults(obj, Faults, va, known)
+    ut.deleteFaults(obj, Faults, va, known)
     obj.value[va] = val
-    writeFaults(obj, Faults, va, known)
+    ut.writeFaults(obj, Faults, va, known)
     return True, -1 if mn == 0 else 0
 
-def HillClimbing_chooseRandom(obj, known = None, allowedSideMoves = 0, tabuSize = 0, iterations = ut.big):
+def HillClimbing_chooseRandom(obj, known = None, allowedSideMoves = 0, tabuSize = 0, iterations = ut.big, memoization = False):
+    if memoization and known is None:
+        known = dict()
     obj.createRandomInstance()
-    Faults = defaultFaults(obj, known)
+    Faults = ut.defaultFaults(obj, known)
     if tabuSize == 0:
         while iterations > 0:
             cont, neg = Iter(obj, Faults, known, allowedSideMoves)
@@ -75,7 +76,7 @@ def HillClimbing_chooseRandom(obj, known = None, allowedSideMoves = 0, tabuSize 
                 break
             allowedSideMoves += neg
             iterations -= 1
-    if not FastVerify(obj, Faults):
+    if not ut.FastVerify(obj, Faults):
         print("Answer does not satisfy all constraints")
         return False
     else:

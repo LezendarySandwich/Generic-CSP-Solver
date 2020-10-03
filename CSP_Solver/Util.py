@@ -1,7 +1,4 @@
-import copy
 from sortedcontainers import SortedList
-from queue import Queue
-
 big = 100000000
 
 class MRV:
@@ -24,21 +21,6 @@ class MRV:
     def increase(self, rem):
         self.remove(rem)
         self.add((rem[0]+1,rem[1]))
-    
-class Tabu:
-    def __init__(self, queueSize):
-        self.fifo = Queue(maxsize=queueSize)
-        self.search = set()
-    def removeFirst(self):
-        rem = self.fifo.get()
-        self.search.remove(rem)
-    def push(self, obj):
-        if self.fifo.full():
-            self.removeFirst()
-        self.fifo.put(tuple(copy.deepcopy(obj.value)))
-        self.search.add(tuple(copy.deepcopy(obj.value)))
-    def find(self, obj):
-        return tuple(copy.deepcopy(obj.value)) in self.search
 
 def LCV(obj, cur):
     Values = []

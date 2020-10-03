@@ -1,10 +1,26 @@
 import enum
+from queue import Queue
+from CSP_Solver.Util import big
 
 class choice(enum.Enum):
     chooseBest = 1
     chooseRandom = 2
     greedyBias = 3
 
+class Tabu:
+    def __init__(self, queueSize):
+        self.fifo = Queue(maxsize=queueSize)
+        self.search = set()
+    def removeFirst(self):
+        rem = self.fifo.get()
+        self.search.remove(rem)
+    def push(self, obj):
+        if self.fifo.full():
+            self.removeFirst()
+        self.fifo.put(tuple(obj.value))
+        self.search.add(tuple(obj.value))
+    def find(self, obj):
+        return tuple(obj.value) in self.search
 
 def writeFaults(obj, Faults, cur, known = None, add = 1):
     if known is not None:

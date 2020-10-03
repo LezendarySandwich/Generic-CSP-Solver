@@ -47,12 +47,12 @@ class CSP:
 
     def solve(self):
         start = time.time()
-        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=20, memoisation=False, choice=choice.greedyBias)
+        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=20, memoization=False, choice=choice.greedyBias)
         end = time.time()
         self.reset()
         print("Time for Hill Climbing Tabu search is :" , end - start)
         start = time.time()
-        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=50, memoisation=True, choice=choice.chooseBest)
+        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=50, memoization=True, choice=choice.chooseBest)
         end = time.time()
         self.reset()
         print("Time for Hill Climbing Tabu search is :" , end - start)
