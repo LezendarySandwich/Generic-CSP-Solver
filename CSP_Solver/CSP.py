@@ -5,7 +5,8 @@ from .dfs import dfs
 from .Forward_Checking.ForwardChecking import ForwardChecking
 from .Forward_Checking.ForwardChecking_MRV import ForwardChecking_MRV
 from .Forward_Checking.ForwardChecking_MRV_LCV import ForwardChecking_MRV_LCV
-from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
+from .Hill_Climbing.Hill_Climbing_Util import choice
+from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts
 from .Hill_Climbing.Hill_Climbing import HillClimbing
 
 class CSP:
@@ -46,12 +47,12 @@ class CSP:
 
     def solve(self):
         start = time.time()
-        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=20, memoisation=True, choice=choice.greedyBias)
+        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=20, memoisation=False, choice=choice.greedyBias)
         end = time.time()
         self.reset()
         print("Time for Hill Climbing Tabu search is :" , end - start)
         start = time.time()
-        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=50, memoisation=True, choice=choice.chooseRandom)
+        Hill_Climbing_with_restarts(self, iterations=200, allowedSideMoves=200, tabuSize=50, memoisation=True, choice=choice.chooseBest)
         end = time.time()
         self.reset()
         print("Time for Hill Climbing Tabu search is :" , end - start)

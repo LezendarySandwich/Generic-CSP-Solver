@@ -1,10 +1,12 @@
 """ 
 heuristic : Minimize the number of constraints failed
 """
+from numpy.random import choice
 import random
 from CSP_Solver import Util as ut
-from .Hill_Climbing import FastVerify
-from .Hill_Climbing_with_memoisation import writeFaults, deleteFaults, defaultFaults
+from .Hill_Climbing_Util import writeFaults, deleteFaults, defaultFaults, FastVerify
+## FINDBEST is FAulty
+
 
 def findBest(obj, Faults, va):
     mn = ut.big
@@ -19,13 +21,17 @@ def findBest(obj, Faults, va):
     return Best, mn
 
 def Iter(obj, Faults, known, allowedSideMoves):
-    choose_from = []
+    probability_distribution = []
+    candidates = [(i + 1) for i in range(obj.variables)]
+    total = 0
     for i in range(1,obj.variables + 1):
-        if Faults[i][obj.value[i]] > 0:
-            choose_from.append(i)
-    if len(choose_from) == 0:
+        probability_distribution.append(Faults[i][obj.value[i]])
+        total += Faults[i][obj.value[i]]
+    if total == 0:
         return False, 0
-    va = random.choice(choose_from)
+    for i in range(obj.variables):
+        probability_distribution[i] /= total
+    [va] = choice(candidates, 1, p=probability_distribution)
     val, mn = findBest(obj, Faults, va)
     if mn > 0 or (mn == 0 and allowedSideMoves <= 0):
         return False, 0
@@ -35,19 +41,24 @@ def Iter(obj, Faults, known, allowedSideMoves):
     return True, -1 if mn == 0 else 0
 
 def TabuIter(obj, Faults, known, allowedSideMoves, tabu):
-    choose_from = []
+    probability_distribution = []
+    candidates = [(i + 1) for i in range(obj.variables)]
+    total = 0
     for i in range(1,obj.variables + 1):
-        if Faults[i][obj.value[i]] > 0:
-            choose_from.append(i)
-    if len(choose_from) == 0:
+        probability_distribution.append(Faults[i][obj.value[i]])
+        total += Faults[i][obj.value[i]]
+    if total == 0:
         return False, 0
-    va = random.choice(choose_from)
+    for i in range(obj.variables):
+        probability_distribution[i] /= total
+    [va] = choice(candidates, 1, p=probability_distribution)
     val, mn = findBest(obj, Faults, va)
     if mn > 0 or (mn == 0 and allowedSideMoves <= 0):
         return False, 0
     previous = obj.value[va]
     obj.value[va] = val
     if mn == 0 and tabu.find(obj):
+        obj.value[va] = previous
         return True, 0
     else:
         tabu.push(obj)
@@ -57,7 +68,7 @@ def TabuIter(obj, Faults, known, allowedSideMoves, tabu):
     writeFaults(obj, Faults, va, known)
     return True, -1 if mn == 0 else 0
 
-def HillClimbing_choose_random_with_memoisation(obj, known = dict(), allowedSideMoves = 0, tabuSize = 0, iterations = ut.big):
+def HillClimbing_greedyBias(obj, known = None, allowedSideMoves = 0, iterations = ut.big, tabuSize = 0):
     obj.createRandomInstance()
     Faults = defaultFaults(obj, known)
     if tabuSize == 0:
@@ -67,11 +78,10 @@ def HillClimbing_choose_random_with_memoisation(obj, known = dict(), allowedSide
                 break
             allowedSideMoves += neg
             iterations -= 1
-    else :
+    else:
         tabu = ut.Tabu(tabuSize)
-        tabu.push(obj)
         while iterations > 0:
-            cont, neg = TabuIter(obj, Faults, known, allowedSideMoves, tabu)
+            cont, neg = TabuIter(obj, Faults, known, allowedSideMoves,tabu)
             if not cont:
                 break
             allowedSideMoves += neg
@@ -79,6 +89,6 @@ def HillClimbing_choose_random_with_memoisation(obj, known = dict(), allowedSide
     if not FastVerify(obj, Faults):
         print("Answer does not satisfy all constraints")
         return False
-    else:
+    else :
         print(obj.value[1:obj.variables + 1])
         return True

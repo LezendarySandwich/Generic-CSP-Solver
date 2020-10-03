@@ -3,20 +3,7 @@ heuristic : Minimize the number of constraints failed
 """
 import random
 from CSP_Solver import Util as ut
-
-def writeFaults(obj, Faults, cur, add = 1):
-    for va in obj.graph[cur]:
-        previousVal = obj.value[va]
-        for value in obj.domains[va]:
-            obj.value[va] = value
-            for constraint in obj.graphConstraints[cur][va]:
-                if not eval(constraint,{"value":obj.value}):
-                    Faults[va][value] += add
-                    break
-        obj.value[va] = previousVal
-
-def deleteFaults(obj, Faults, cur):
-    writeFaults(obj, Faults, cur, -1)
+from .Hill_Climbing_Util import FastVerify, writeFaults, deleteFaults, defaultFaults
 
 def findBest(obj, Faults):
     mn = ut.big
@@ -31,17 +18,17 @@ def findBest(obj, Faults):
     Best = random.choice(best)
     return Best, mn
 
-def Iter(obj, Faults, allowedSideMoves):
+def Iter(obj, Faults, known, allowedSideMoves):
     best, mn = findBest(obj, Faults)
     if mn > 0 or (mn == 0 and allowedSideMoves <= 0):
         return False, 0
     (va, val) = best
-    deleteFaults(obj, Faults, va)
+    deleteFaults(obj, Faults, va, known)
     obj.value[va] = val
-    writeFaults(obj, Faults, va)
+    writeFaults(obj = obj, Faults = Faults, cur = va,known = known)
     return True, -1 if mn == 0 else 0
 
-def TabuIter(obj, Faults, allowedSideMoves, tabu):
+def TabuIter(obj, Faults, known, allowedSideMoves, tabu):
     best, mn = findBest(obj, Faults)
     if mn > 0 or (mn == 0 and allowedSideMoves <= 0):
         return False, 0
@@ -54,32 +41,17 @@ def TabuIter(obj, Faults, allowedSideMoves, tabu):
     else:
         tabu.push(obj)
     obj.value[va] = previous
-    deleteFaults(obj, Faults, va)
+    deleteFaults(obj, Faults, va, known)
     obj.value[va] = val
-    writeFaults(obj, Faults, va)
+    writeFaults(obj = obj, Faults = Faults, cur = va,known = known)
     return True, -1 if mn == 0 else 0
 
-def defaultFaults(obj):
-    Faults = [dict() for i in range(obj.variables + 1)]
-    for i in range(1,obj.variables + 1):
-        for value in obj.domainHelp[i]:
-            Faults[i][value] = 0
-    for i in range(1,obj.variables + 1):
-        writeFaults(obj, Faults, i)
-    return Faults
-
-def FastVerify(obj, Faults):
-    for i in range(1,obj.variables + 1):
-        if Faults[i][obj.value[i]] > 0:
-            return False
-    return True
-
-def HillClimbing(obj, allowedSideMoves = 0, tabuSize = 0, iterations = ut.big):
+def HillClimbing(obj, known = None, allowedSideMoves = 0, tabuSize = 0, iterations = ut.big):
     obj.createRandomInstance()
-    Faults = defaultFaults(obj)
+    Faults = defaultFaults(obj, known)
     if tabuSize == 0:
         while iterations > 0:
-            cont, neg = Iter(obj, Faults, allowedSideMoves)
+            cont, neg = Iter(obj, Faults, known, allowedSideMoves)
             if not cont:
                 break
             allowedSideMoves += neg
@@ -88,7 +60,7 @@ def HillClimbing(obj, allowedSideMoves = 0, tabuSize = 0, iterations = ut.big):
         tabu = ut.Tabu(tabuSize)
         tabu.push(obj)
         while iterations > 0:
-            cont, neg = TabuIter(obj, Faults, allowedSideMoves, tabu)
+            cont, neg = TabuIter(obj, Faults, known, allowedSideMoves, tabu)
             if not cont:
                 break
             allowedSideMoves += neg
