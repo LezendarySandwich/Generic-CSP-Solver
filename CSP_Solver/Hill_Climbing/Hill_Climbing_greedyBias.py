@@ -4,8 +4,6 @@ heuristic : Minimize the number of constraints failed
 from numpy.random import choice
 import random
 from . import Hill_Climbing_Util as ut
-## FINDBEST is FAulty
-
 
 def findBest(obj, Faults, va):
     mn = ut.big
