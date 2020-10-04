@@ -1,4 +1,4 @@
-from .Util import verify
+from CSP_Solver.Util import verify
 
 def BackTracking(obj, cur):
     if cur > obj.variables:
