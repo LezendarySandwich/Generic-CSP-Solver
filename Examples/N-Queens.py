@@ -10,7 +10,7 @@ def constraints(self):
             self.add(i,j,'abs(value[j] - value[i]) != j - i','i','j')
 
 CS.CSP.constraints = constraints
-n = 15
+n = 50
 a = CS.CSP(n)
 dom = []
 for i in range (n):

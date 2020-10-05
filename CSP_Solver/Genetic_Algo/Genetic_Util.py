@@ -9,7 +9,7 @@ def generateInitailPopulation(obj, populationSize):
         population.append((fitnessValue(obj, obj.value), copy.deepcopy(obj.value)))
     return population
 
-def randomMutation(obj, values, mutationProbability = 1):
+def randomMutation(obj, values, mutationProbability = 0.04):
     return [random.choice(obj.domainHelp[i]) if i is not 0 and random.uniform(0,1) <= mutationProbability else values[i] for i in range(len(values))]
 
 def fitnessValue(obj, values):

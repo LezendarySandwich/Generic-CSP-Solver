@@ -5,7 +5,6 @@ def Genetic_Solver(obj, populationSize, generations = gu.big):
     while obj.stop == 0 and generations > 0:
         population = gu.nextGeneration(obj, population, k = populationSize)
         generations -= 1
-        print(population)
     if obj.stop == 1:
         for fitness, values in population:
             if fitness == 0:
