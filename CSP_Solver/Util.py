@@ -4,8 +4,10 @@ big = 100000000
 class MRV:
     def __init__(self, obj):
         self.Ordering = SortedList()
+        self.Help = dict()
         for i in range(1,obj.variables + 1):
             self.Ordering.add((len(obj.domains[i]),i))
+            self.Help[i] = len(obj.domains[i])
     def finished(self):
         return len(self.Ordering) == 0
     def minimum(self):
@@ -13,14 +15,21 @@ class MRV:
     def remove(self, element):
         self.Ordering.discard(element)
     def add(self, element):
-        self.Ordering.add(element)
+        if element not in self.Ordering:
+            self.Ordering.add(element)
     def decrease(self, rem):
         # rem = [length, variable]
         self.remove(rem)
+        self.Help[rem[1]] -= 1
         self.add((rem[0]-1,rem[1]))
     def increase(self, rem):
         self.remove(rem)
+        self.Help[rem[1]] += 1
         self.add((rem[0]+1,rem[1]))
+    def correct(self, rem, newLen):
+        self.remove((self.Help[rem], rem))
+        self.Help[rem] = newLen
+        self.add((self.Help[rem], rem))
 
 def LCV(obj, cur):
     Values = []
@@ -85,7 +94,8 @@ def makeConsistent(obj, setOfArcs):
         arc = setOfArcs.pop()
         if RemoveInconsistent(obj, arc, Removed):
             for neighbour in obj.graph[arc[0]]:
-                setOfArcs.add((neighbour, arc[0]))
+                # if not obj.givenValue[neighbour]: 
+                    setOfArcs.add((neighbour, arc[0]))
     return Removed
 
 def verify(obj, getFault = False):

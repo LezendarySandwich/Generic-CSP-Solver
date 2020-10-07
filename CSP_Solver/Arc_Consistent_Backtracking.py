@@ -11,17 +11,21 @@ def putArcs(obj, arcs, cur):
 def BackTrack(obj, Mrv, arcs):
     if Mrv.finished():
         obj.stop = 1
-        print(obj.value[1:obj.variables+1])
+        print(obj.value[1:])
         return
     current = Mrv.minimum()
     cur = current[1]
+    # print(cur,len(obj.domains[cur]))
     if len(obj.domains[cur]) == 0:
-        return 
+         return 
     Mrv.remove(current)
     Values = LCV(obj, cur)
     obj.givenValue[cur] = True
-    removeArcs(obj, arcs, cur)
-    makeConsistent(obj, set(arcs))
+    # removeArcs(obj, arcs, cur)
+    RemovedArcValues = makeConsistent(obj, set(arcs))
+    # print(RemovedArcValues,cur,Mrv.Ordering)
+    for va, val in RemovedArcValues:
+        Mrv.correct(va, len(obj.domains[va]))
     for value in Values:
         Removed = toRemove(obj, cur, value[1])
         for rem in Removed:
@@ -33,9 +37,13 @@ def BackTrack(obj, Mrv, arcs):
         for rem in Removed:
             Mrv.increase((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].add(rem[1])
+    for va, val in RemovedArcValues:
+        obj.domains[va].add(val)
+    for va, val in RemovedArcValues:
+        Mrv.correct(va, len(obj.domains[va]))
     Mrv.add(current)
     obj.givenValue[cur] = False
-    putArcs(obj, arcs, cur)
+    # putArcs(obj, arcs, cur)
 
 def ArcConsistent_MRV_LCV(obj):
     arcs = set()

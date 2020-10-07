@@ -69,6 +69,7 @@ class Instance:
         val = random.choice(obj.domainHelp[va])
         delta = self.Faults[va][val] - self.Faults[va][self.value[va]]
         return va, val, delta
+
     def ver(self):
         for i in range(1,len(self.value)):
             if self.Faults[i][self.value[i]] is not 0:
