@@ -63,3 +63,16 @@ class Instance:
             if mn < 0:
                 neighbour.append((self.currentFitness + 2 * mn, index, i, random.choice(val)))
         return neighbour
+    
+    def randNeighbour(self, obj):
+        va = random.randint(1, len(self.value) - 1)
+        val = random.choice(obj.domainHelp[va])
+        delta = self.Faults[va][val] - self.Faults[va][self.value[va]]
+        return va, val, delta
+    def ver(self):
+        for i in range(1,len(self.value)):
+            if self.Faults[i][self.value[i]] is not 0:
+                return False
+        if self.currentFitness is not 0:
+            raise Exception("Wrong Code")
+        return True

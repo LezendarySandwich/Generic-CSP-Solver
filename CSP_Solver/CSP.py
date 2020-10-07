@@ -10,6 +10,7 @@ from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restar
 from .Hill_Climbing.Hill_Climbing import HillClimbing
 from .Genetic_Algo.Genetic_Solver import Genetic_Solver
 from .General_LocalSearch_Algorithms.local_beam_search import local_beam_search
+from .General_LocalSearch_Algorithms.Simulated_Annealing import simulated_annealing
 
 class CSP:
     def __init__(self, variables):
@@ -61,8 +62,12 @@ class CSP:
         # end = time.time()
         # self.reset()
         # print("Time for Hill Climbing Tabu search is :" , end - start)
-        # Genetic_Solver(self, 200, 100)
-        local_beam_search(self, 100)
+        # Genetic_Solver(self, 400, 200)
+        # start = time.time()
+        # ForwardChecking_MRV(self)
+        # print(time.time() - start)
+        # local_beam_search(self, 100)
+        simulated_annealing(obj = self)
 
     def createRandomInstance(self):
         for i in range(1,self.variables + 1):
