@@ -12,6 +12,7 @@ from .Genetic_Algo.Genetic_Solver import Genetic_Solver
 from .General_LocalSearch_Algorithms.local_beam_search import local_beam_search
 from .General_LocalSearch_Algorithms.Simulated_Annealing import simulated_annealing
 from .Arc_Consistent_Backtracking import ArcConsistent_MRV_LCV
+from .My_Algorithm import My_Algo
 
 class CSP:
     def __init__(self, variables):
@@ -25,7 +26,7 @@ class CSP:
         self.graphConstraints = [dict() for i in range(variables + 1)]
         self.AllConstraints = []
         self.stop = 0
-    def Domain(self, domain = []):
+    def commonDomain(self, domain = []):
         for value in domain:
             for i in range(1,self.variables+1):
                 self.domains[i].add(value)
@@ -70,12 +71,12 @@ class CSP:
         # local_beam_search(self, 100)
         # simulated_annealing(obj = self)
         # ForwardChecking_MRV(self)
-        ArcConsistent_MRV_LCV(self)
+        # ArcConsistent_MRV_LCV(self)
+        My_Algo(self)
 
     def createRandomInstance(self):
         for i in range(1,self.variables + 1):
-            rand = random.randint(0,len(self.domains[i])-1)
-            self.value[i] = self.domainHelp[i][rand]
+            self.value[i] = random.choice(list(self.domains[i]))
 
     def reset(self):
         self.stop = 0

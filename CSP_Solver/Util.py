@@ -10,6 +10,8 @@ class MRV:
             self.Help[i] = len(obj.domains[i])
     def finished(self):
         return len(self.Ordering) == 0
+    def size(self):
+        return len(self.Ordering)
     def minimum(self):
         return self.Ordering[0]
     def remove(self, element):

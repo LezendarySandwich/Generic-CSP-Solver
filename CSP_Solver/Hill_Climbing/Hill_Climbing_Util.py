@@ -57,7 +57,7 @@ def deleteFaults(obj, Faults, cur, known):
 def defaultFaults(obj, known):
     Faults = [dict() for i in range(obj.variables + 1)]
     for i in range(1,obj.variables + 1):
-        for value in obj.domainHelp[i]:
+        for value in obj.domains[i]:
             Faults[i][value] = 0
     for i in range(1,obj.variables + 1):
         writeFaults(obj, Faults, i, known)

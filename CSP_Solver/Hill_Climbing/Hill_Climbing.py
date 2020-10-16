@@ -8,7 +8,7 @@ def findBest(obj, Faults):
     mn = ut.big
     best = []
     for va in range(obj.variables + 1):
-        for value in obj.domainHelp[va]:
+        for value in obj.domain[va]:
             if mn > Faults[va][value] - Faults[va][obj.value[va]]:
                 mn = Faults[va][value] - Faults[va][obj.value[va]]
                 best = [(va, value)]

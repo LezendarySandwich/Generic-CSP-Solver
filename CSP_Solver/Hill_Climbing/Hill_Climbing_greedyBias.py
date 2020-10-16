@@ -8,7 +8,7 @@ from . import Hill_Climbing_Util as ut
 def findBest(obj, Faults, va):
     mn = ut.big
     best = []
-    for value in obj.domainHelp[va]:
+    for value in obj.domains[va]:
         if mn > Faults[va][value] - Faults[va][obj.value[va]]:
             mn = Faults[va][value] - Faults[va][obj.value[va]]
             best = [value]
@@ -89,5 +89,5 @@ def HillClimbing_greedyBias(obj, known = None, allowedSideMoves = 0, iterations 
         print("Answer does not satisfy all constraints")
         return False
     else :
-        print(obj.value[1:obj.variables + 1])
+        print(obj.value[1:])
         return True
