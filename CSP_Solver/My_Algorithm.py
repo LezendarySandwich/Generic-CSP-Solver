@@ -7,15 +7,15 @@ def BackTrack(obj, Mrv):
         obj.stop = 1
         print(obj.value[1:])
         return
-    if Mrv.size() < obj.variables // 2:
-        flag = Hill_Climbing_with_restarts(obj = obj, memoization=True,allowedSideMoves=30,choice=choice.greedyBias,application=100)
-        if flag:
-            obj.stop = 1
-            return
     current = Mrv.minimum()
     cur = current[1]
     if len(obj.domains[cur]) == 0:
         return 
+    if Mrv.size() < obj.variables // 2:
+        flag = Hill_Climbing_with_restarts(obj = obj, memoization=True,allowedSideMoves=100,choice=choice.greedyBias,application=150)
+        if flag:
+            obj.stop = 1
+            return
     Mrv.remove(current)
     obj.givenValue[cur] = True
     iterableList = deepcopy(obj.domains[cur])

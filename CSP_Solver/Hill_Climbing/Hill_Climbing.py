@@ -8,7 +8,7 @@ def findBest(obj, Faults):
     mn = ut.big
     best = []
     for va in range(obj.variables + 1):
-        for value in obj.domain[va]:
+        for value in obj.domains[va]:
             if mn > Faults[va][value] - Faults[va][obj.value[va]]:
                 mn = Faults[va][value] - Faults[va][obj.value[va]]
                 best = [(va, value)]
@@ -67,8 +67,6 @@ def HillClimbing(obj, known = None, allowedSideMoves = 0, tabuSize = 0, iteratio
             allowedSideMoves += neg
             iterations -= 1
     if not ut.FastVerify(obj, Faults):
-        print("Answer does not satisfy all constraints")
         return False
     else :
-        print(obj.value[1:obj.variables + 1])
         return True

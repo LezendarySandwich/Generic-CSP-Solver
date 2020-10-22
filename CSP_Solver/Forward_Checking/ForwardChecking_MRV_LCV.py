@@ -1,9 +1,11 @@
 from CSP_Solver.Util import toRemove, MRV, LCV
+from time import clock
 
-def BackTrack(obj, Mrv):
+def BackTrack(obj, Mrv, start, timeout):
+    if clock() - start > timeout:
+        return
     if Mrv.finished():
         obj.stop = 1
-        print(obj.value[1:obj.variables+1])
         return
     current = Mrv.minimum()
     cur = current[1]
@@ -17,7 +19,7 @@ def BackTrack(obj, Mrv):
         for rem in Removed:
             Mrv.decrease((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].discard(rem[1])
-        BackTrack(obj, Mrv)
+        BackTrack(obj, Mrv, start, timeout)
         if obj.stop:
             return 
         for rem in Removed:
@@ -26,8 +28,7 @@ def BackTrack(obj, Mrv):
     Mrv.add(current)
     obj.givenValue[cur] = False
 
-def ForwardChecking_MRV_LCV(obj):
+def ForwardChecking_MRV_LCV(obj, timeout):
+    start = clock()
     Mrv = MRV(obj)
-    BackTrack(obj, Mrv)
-    if not obj.stop:
-        print("No valid Solution Exists")
+    BackTrack(obj, Mrv, start, timeout)

@@ -1,7 +1,10 @@
-def BackTracking(obj, cur):
+from time import clock
+
+def BackTracking(obj, cur, start, timeout):
+    if clock() - start > timeout:
+        return 
     if cur > obj.variables:
         obj.stop = 1
-        print(obj.value[1:obj.variables+1])
         return
     obj.givenValue[cur] = True
     for value in obj.domains[cur]:
@@ -18,12 +21,11 @@ def BackTracking(obj, cur):
                 break
         if not canBeValue:
             continue
-        BackTracking(obj, cur + 1)
+        BackTracking(obj, cur + 1, start, timeout)
         if obj.stop:
             return 
     obj.givenValue[cur] = False
 
-def BackTrack(obj):
-    BackTracking(obj, 1)
-    if not obj.stop:
-        print("No valid Solution Exists")
+def BackTrack(obj, timeout = 10):
+    start = clock()
+    BackTracking(obj, 1, start, timeout)

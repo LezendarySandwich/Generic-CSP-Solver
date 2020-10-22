@@ -1,9 +1,11 @@
 from CSP_Solver.Util import toRemove
+from time import clock
 
-def BackTracking(obj, cur):
+def BackTracking(obj, cur, start, timeout):
+    if clock() - start > timeout:
+        return
     if cur > obj.variables:
         obj.stop = 1
-        print(obj.value[1:obj.variables+1])
         return
     obj.givenValue[cur] = True
     for value in obj.domains[cur]:
@@ -14,14 +16,13 @@ def BackTracking(obj, cur):
             if len(obj.domains[rem[0]]) == 0:
                 Possible = False
         if Possible:
-            BackTracking(obj, cur + 1)
+            BackTracking(obj, cur + 1, start, timeout)
         if obj.stop:
             return 
         for rem in Removed:
             obj.domains[rem[0]].add(rem[1])
     obj.givenValue[cur] = False
 
-def ForwardChecking(obj):
-    BackTracking(obj, 1)
-    if not obj.stop:
-        print("No valid Solution Exists")
+def ForwardChecking(obj, timeout = 10):
+    start = clock()
+    BackTracking(obj, 1, start, timeout)
