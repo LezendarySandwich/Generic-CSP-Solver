@@ -7,7 +7,7 @@ def Genetic_Solver(obj, populationSize, generations = gu.big, timeout = 10):
     while obj.stop == 0 and generations > 0:
         if clock() - start > timeout:
             return 
-        population = gu.nextGeneration(obj, population, k = populationSize // 2)
+        population = gu.nextGeneration(obj, population, k = populationSize * 3 // 4)
         generations -= 1
     if obj.stop == 1:
         for fitness, values in population:

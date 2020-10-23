@@ -1,14 +1,12 @@
-N-Queens
+mapColoring
 Params- Split: None; Allowed Number of Side Moves: None; Size of Tabu List: 0
-Time Taken: 0.203125
+Time Taken: 0.0
 
-value[1] : 1
-value[2] : 3
-value[3] : 6
-value[4] : 8
-value[5] : 10
-value[6] : 5
-value[7] : 9
-value[8] : 2
-value[9] : 4
-value[10] : 7
+value[1] : Indigo
+value[2] : Yellow
+value[3] : Red
+value[4] : Black
+value[5] : Orange
+value[6] : White
+value[7] : Pink
+value[8] : Blue

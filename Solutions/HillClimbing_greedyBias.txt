@@ -1,14 +1,12 @@
-N-Queens
-Params- memoization: True; Allowed Number of Side Moves: 10; Tabu List Size: 0; Allowed Number of iterations: 100000000
-Time Taken: 0.046875
+mapColoring
+Params- memoization: True; Allowed Number of Side Moves: 8; Tabu List Size: 0; Allowed Number of iterations: 100000000
+Time Taken: 0.0
 
-value[1] : 1
-value[2] : 8
-value[3] : 2
-value[4] : 9
-value[5] : 6
-value[6] : 3
-value[7] : 10
-value[8] : 4
-value[9] : 7
-value[10] : 5
+value[1] : Orange
+value[2] : Black
+value[3] : Pink
+value[4] : White
+value[5] : Yellow
+value[6] : Indigo
+value[7] : Red
+value[8] : Blue

@@ -1,10 +1,14 @@
 def removeArcs(obj, arcs, cur):
+    removed = []
     for neighbour in obj.graph[cur]:
-        arcs.remove((neighbour, cur))
+        if (neighbour, cur) in arcs:
+            arcs.discard((neighbour, cur))
+            removed.append((neighbour, cur))
+    return removed
 
-def putArcs(obj, arcs, cur):
-    for neighbour in obj.graph[cur]:
-        arcs.add((neighbour, cur))
+def putArcs(obj, arcs, removed):
+    for rem in removed:
+        arcs.add(rem)
 
 def RemoveInconsistent(obj, arc, Removed):
     remove = []

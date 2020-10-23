@@ -32,24 +32,37 @@ class CSP:
         self.multivariate = False
     
     def commonDomain(self, domain = []):
+        """
+        To set same domain for all variables
+        """
         for value in domain:
             for i in range(1,self.variables+1):
                 self.domains[i].add(value)
                 self.domainHelp[i].append(value)
 
     def separateDomain(self, variable, domain = []):
+        """
+        To seperately set domain values for variables
+        """
         self.domainHelp[variable] = deepcopy(domain)
         self.domains[variable] = set(domain)
 
     def setValue(self, variable, value):
+        """
+        To Enforce Unary Constraints
+        """
         self.domainHelp[variable] = [value]
         self.domains[variable] = {value}
 
-    def add(self, comparison):
+    def addConstraint(self, constraint):
+        """
+        Enforce constraints
+        pass comparison as string
+        """
         numbers = []
         prev = False
         cur = ""
-        for i in comparison:
+        for i in constraint:
             if i == ' ':
                 continue
             if i == '[':
@@ -62,26 +75,26 @@ class CSP:
                 continue
             if prev:
                 cur += i
-        comparison = compile(comparison, "<string>", "eval")
+        constraint = compile(constraint, "<string>", "eval")
         if len(numbers) > 2:
             self.multivariate = True
         for i in range (len(numbers)):
             n1 = numbers[i]
             for j in range(i + 1, len(numbers)):
                 n2 = numbers[j];
-                self.multivariateGraph[n1].append((comparison, numbers))
-                self.multivariateGraph[n2].append((comparison, numbers))
+                self.multivariateGraph[n1].append((constraint, numbers))
+                self.multivariateGraph[n2].append((constraint, numbers))
                 if n2 in self.graphConstraints[n1]:
-                    self.graphConstraints[n1][n2].add(comparison)
+                    self.graphConstraints[n1][n2].add(constraint)
                 else:
-                    self.graphConstraints[n1][n2] = {comparison}
+                    self.graphConstraints[n1][n2] = {constraint}
                 if n1 in self.graphConstraints[n2]:
-                    self.graphConstraints[n2][n1].add(comparison)
+                    self.graphConstraints[n2][n1].add(constraint)
                 else:
-                    self.graphConstraints[n2][n1] = {comparison}
+                    self.graphConstraints[n2][n1] = {constraint}
                 self.graph[n1].add(n2)
                 self.graph[n2].add(n1)
-        self.AllConstraints.append(comparison)
+        self.AllConstraints.append(constraint)
 
     def solve_dfs(self, timeout = 10):
         self.reset()
@@ -95,7 +108,7 @@ class CSP:
             print ("dfs timed out")
             wr += "dfs timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
+            print("DFS: No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by dfs: ", end - start)
@@ -116,7 +129,7 @@ class CSP:
             print ("BackTrack timed out")
             wr += "BackTrack timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
+            print("BackTrack: No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by BackTrack: ", end - start)
@@ -137,7 +150,7 @@ class CSP:
             print ("ForwardChecking timed out")
             wr += "ForwardChecking timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
+            print("Forward Checking: No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by ForwardChecking: ", end - start)
@@ -158,7 +171,7 @@ class CSP:
             print ("ForwardChecking_MRV timed out")
             wr += "ForwardChecking_MRV timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
+            print("Forward Checking MRV: No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by ForwardChecking_MRV: ", end - start)
@@ -179,7 +192,7 @@ class CSP:
             print ("ForwardChecking_MRV_LCV timed out")
             wr += "ForwardChecking_MRV_LCV timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
+            print("Forward Checking MRV and LCV: No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by ForwardChecking_MRV_LCV: ", end - start)
@@ -191,7 +204,7 @@ class CSP:
     def solve_HillClimbing_chooseBest(self, memoization = True, iterations = big, allowedSideMoves = None, tabuSize = 0, timeout = 10):
         self.reset()
         if allowedSideMoves == None:
-            allowedSideMoves = self.variables
+            allowedSideMoves = self.variables << 1
         start = time.clock()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.chooseBest, timeout = timeout)
         end = time.clock()
@@ -203,7 +216,7 @@ class CSP:
             print ("HillClimbing_chooseBest timed out")
             wr += "HillClimbing_chooseBest timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
+            print("HillClimbing_chooseBest: No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by HillClimbing_chooseBest:", end - start)
@@ -215,7 +228,7 @@ class CSP:
     def solve_HillClimbing_greedyBias(self, memoization = True, iterations = big, allowedSideMoves = None, tabuSize = 0, timeout = 10):
         self.reset()
         if allowedSideMoves == None:
-            allowedSideMoves = self.variables
+            allowedSideMoves = self.variables << 1
         start = time.clock()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.greedyBias, timeout = timeout)
         end = time.clock()
@@ -239,7 +252,7 @@ class CSP:
     def solve_HillClimbing_chooseRandom(self, memoization = True, iterations = big, allowedSideMoves = None, tabuSize = 0, timeout = 10):
         self.reset()
         if allowedSideMoves == None:
-            allowedSideMoves = self.variables
+            allowedSideMoves = self.variables << 1
         start = time.clock()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.chooseRandom, timeout = timeout)
         end = time.clock()
@@ -287,7 +300,7 @@ class CSP:
     def solve_local_beam_search(self, beams = None, timeout = 10):
         self.reset()
         if beams == None:
-            beams = self.variables
+            beams = self.variables << 1
         start = time.clock()
         local_beam_search(obj = self, k = beams, timeout = timeout)
         end = time.clock()
@@ -299,8 +312,8 @@ class CSP:
             print ("local beam search timed out")
             wr += "local beam search timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
+            print("Solution not found using local beam search")
+            wr += "Solution not found"
         else :
             print("Time taken by local beam search:", end - start)
             for i in range(1,self.variables + 1):
@@ -321,8 +334,8 @@ class CSP:
             print ("Simulated Annealing timed out")
             wr += "Simulated Annealing timed out"
         elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
+            print("Solution not found using Simulated Annealing")
+            wr += "Solution not found"
         else :
             print("Time taken by Simulated Annealing:", end - start)
             for i in range(1,self.variables + 1):
@@ -379,14 +392,15 @@ class CSP:
         self.solve_ForwardChecking(timeout = timeout)
         self.solve_ForwardChecking_MRV(timeout = timeout)
         self.solve_ForwardChecking_MRV_LCV(timeout = timeout)
-        self.solve_HillClimbing_chooseBest(timeout = timeout)
-        self.solve_HillClimbing_chooseRandom(timeout = timeout)
-        self.solve_HillClimbing_greedyBias(timeout = timeout)
-        self.solve_GeneticAlgo(timeout = timeout)
-        self.solve_local_beam_search(timeout = timeout)
-        self.solve_Simulated_Annealing(timeout = timeout)
-        # self.solve_ArcConsistent_BackTracking(timeout = timeout)
-        self.solve_novelAlgorithm(timeout = timeout)
+        if not self.multivariate:
+            self.solve_HillClimbing_chooseBest(timeout = timeout)
+            self.solve_HillClimbing_chooseRandom(timeout = timeout)
+            self.solve_HillClimbing_greedyBias(timeout = timeout)
+            self.solve_GeneticAlgo(timeout = timeout)
+            self.solve_local_beam_search(timeout = timeout)
+            self.solve_Simulated_Annealing(timeout = timeout)
+            self.solve_ArcConsistent_BackTracking(timeout = timeout)
+            self.solve_novelAlgorithm(timeout = timeout)
 
     def createRandomInstance(self):
         for i in range(1,self.variables + 1):

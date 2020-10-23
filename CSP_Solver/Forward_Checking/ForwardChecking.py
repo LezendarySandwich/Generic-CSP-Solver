@@ -1,3 +1,7 @@
+"""
+Works for bivariate as well as multivariate constraints
+"""
+
 from CSP_Solver.Util import toRemove
 from time import clock
 

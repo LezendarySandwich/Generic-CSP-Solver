@@ -1,6 +1,5 @@
 import copy, random
 from CSP_Solver.Util import big
-from math import sqrt
 
 def generateInitailPopulation(obj, populationSize):
     population = []
@@ -48,7 +47,7 @@ def tournamentSelection(obj, currentPopulation, k):
 
 def nextGeneration(obj, currentPopulation, k = None, crossoverProbability = .74):
     if k is None:
-        k = int(sqrt(len(currentPopulation))) + 1
+        k = len(currentPopulation) // 2
     newPopulation = []
     while len(newPopulation) < len(currentPopulation):
         parent1, parent2 = tournamentSelection(obj, currentPopulation, k)

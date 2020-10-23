@@ -1,13 +1,11 @@
-N-Queens
+mapColoring
 Time Taken: 0.015625
 
-value[1] : 1
-value[2] : 4
-value[3] : 7
-value[4] : 10
-value[5] : 8
-value[6] : 3
-value[7] : 5
-value[8] : 9
-value[9] : 2
-value[10] : 6
+value[1] : Black
+value[2] : Indigo
+value[3] : Orange
+value[4] : Pink
+value[5] : Red
+value[6] : White
+value[7] : Yellow
+value[8] : Blue

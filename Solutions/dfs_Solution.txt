@@ -1,4 +1,4 @@
-N-Queens
+Equation
 Time Taken: 2.015625
 
 dfs timed out

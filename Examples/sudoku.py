@@ -3,8 +3,8 @@ sys.path.insert(0, './../')
 import CSP_Solver as CS
 
 variables = 81
-a = CS.CSP(variables, problem_name='Sudoku')
-a.commonDomain([i for i in range(1, 10)])
+Sudoku = CS.CSP(variables, problem_name='Sudoku')
+Sudoku.commonDomain([i for i in range(1, 10)])
 
 for i in range(1,variables + 1):
     row1, col1 = (i - 1) // 9, (i - 1) % 9
@@ -13,7 +13,7 @@ for i in range(1,variables + 1):
         row2, col2 = (j - 1) // 9, (j - 1) % 9
         box2 = (row2 // 3, col2 // 3) 
         if row1 == row2 or col1 == col2 or box1 == box2:
-            a.add('value[' + str(i) + '] != value[' + str(j) + ']')
+            Sudoku.addConstraint('value[' + str(i) + '] != value[' + str(j) + ']')
 
 grid = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
         [5, 2, 0, 0, 0, 0, 0, 0, 0],
@@ -28,19 +28,17 @@ grid = [[3, 0, 6, 5, 0, 8, 4, 0, 0],
 for i in range(0,9):
     for j in range(0, 9):
         if grid[i][j] != 0:
-            a.setValue(i * 9 + j + 1, grid[i][j])
+            Sudoku.setValue(i * 9 + j + 1, grid[i][j])
             
-a.testAllDefaultParams(timeout = 20)
+Sudoku.testAllDefaultParams(timeout = 20)
 
-if a.stop == 1:
+if Sudoku.stop == 1:
     for i in range(1, variables + 1):
         if (i - 1) % 9 == 0:
             print('|', sep='', end='')
         print('|', sep='', end='')
-        print(a.value[i], end='')
+        print(Sudoku.value[i], end='')
         if i % 3 == 0:
             print('|', sep='', end='')
         if i % 9 == 0:
             print('|')
-
-

@@ -1,5 +1,12 @@
-N-Queens
-Params- Number of beams: 10
-Time Taken: 0.03125
+mapColoring
+Params- Number of beams: 16
+Time Taken: 0.0
 
-No valid solution exist
+value[1] : Orange
+value[2] : Indigo
+value[3] : Yellow
+value[4] : Red
+value[5] : White
+value[6] : Pink
+value[7] : Black
+value[8] : Blue
