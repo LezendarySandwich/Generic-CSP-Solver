@@ -15,10 +15,11 @@ Equation.addConstraint('value[6] - 5 * value[7] + 4 * value[3] == value[1] * val
 Equation.addConstraint('value[7] - value[2] is not value[4]')
 Equation.addConstraint('value[7] + value[2] >= value[5]')
 Equation.addConstraint('value[8] + value[9] > value[10]')
-Equation.setValue(10, 56)
+Equation.setValue(10, 60)
 Equation.addConstraint('value[8] - value[9] + value[4] < value[10] + 2 * value[5]')
 Equation.addConstraint('value[8] ^ value[9] + value[4] is value[10]')
 Equation.addConstraint('(value[8] & value[9]) | value[4] < value[10] - 5 * value[3]')
+Equation.addConstraint('value[1] * value[2] // value[3] < value[7]')
 
 Equation.testAllDefaultParams(timeout = 2)
 

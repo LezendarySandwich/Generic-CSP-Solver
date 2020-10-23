@@ -9,5 +9,5 @@ value[5] : 3
 value[6] : 6
 value[7] : 4
 value[8] : 2
-value[9] : 56
-value[10] : 56
+value[9] : 60
+value[10] : 60

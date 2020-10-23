@@ -1,5 +1,5 @@
 Equation
-Time Taken: 1.40625
+Time Taken: 1.453125
 
 value[1] : 3
 value[2] : 1
@@ -9,5 +9,5 @@ value[5] : 1
 value[6] : 1
 value[7] : 4
 value[8] : 1
-value[9] : 56
-value[10] : 56
+value[9] : 60
+value[10] : 60

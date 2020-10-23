@@ -41,6 +41,5 @@ def makeConsistent(obj, setOfArcs):
         arc = setOfArcs.pop()
         if RemoveInconsistent(obj, arc, Removed):
             for neighbour in obj.graph[arc[0]]:
-                # if not obj.givenValue[neighbour]: 
-                    setOfArcs.add((neighbour, arc[0]))
+                setOfArcs.add((neighbour, arc[0]))
     return Removed

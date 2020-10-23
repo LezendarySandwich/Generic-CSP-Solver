@@ -1,4 +1,4 @@
-import random, time, multiprocessing
+import random, time
 from datetime import datetime
 from .Util import big
 from copy import deepcopy
@@ -42,7 +42,7 @@ class CSP:
 
     def separateDomain(self, variable, domain = []):
         """
-        To seperately set domain values for variables
+        To separately set domain values for variables
         """
         self.domainHelp[variable] = deepcopy(domain)
         self.domains[variable] = set(domain)
