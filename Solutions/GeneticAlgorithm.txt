@@ -1,0 +1,5 @@
+Sudoku
+Params- Size of Population: 81; Allowed Number of Generations 100000000
+Time Taken: 20.046875
+
+Genetic Algorithm timed out

@@ -1,0 +1,5 @@
+Sudoku
+Params- memoization: True; Allowed Number of Side Moves: 81; Tabu List Size: 0; Allowed Number of iterations: 100000000
+Time Taken: 20.015625
+
+HillClimbing_chooseRandom timed out

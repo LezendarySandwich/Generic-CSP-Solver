@@ -30,7 +30,7 @@ for i in range(0,9):
         if grid[i][j] != 0:
             a.setValue(i * 9 + j + 1, grid[i][j])
             
-a.solve_HillClimbing_chooseBest(allowedSideMoves=150, tabuSize=100, timeout = 20)
+a.testAllDefaultParams(timeout = 20)
 
 if a.stop == 1:
     for i in range(1, variables + 1):

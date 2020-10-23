@@ -1,3 +1,7 @@
+"""
+Works for bivariate as well as multivariate constraints
+"""
+
 from time import clock
 
 def BackTracking(obj, cur, start, timeout):
@@ -10,15 +14,26 @@ def BackTracking(obj, cur, start, timeout):
     for value in obj.domains[cur]:
         obj.value[cur] = value
         canBeValue = True
-        for neighbour in obj.graph[cur]:
-            if not obj.givenValue[neighbour]:
-                continue
-            for constraint in obj.graphConstraints[cur][neighbour]:
-                if not eval(constraint, {"value": obj.value}):
+        if not obj.multivariate:
+            for neighbour in obj.graph[cur]:
+                if not obj.givenValue[neighbour]:
+                    continue
+                for constraint in obj.graphConstraints[cur][neighbour]:
+                    if not eval(constraint, {"value": obj.value}):
+                        canBeValue = False
+                        break
+                if not canBeValue:
+                    break
+        else:
+            for constraint, neighbours in obj.multivariateGraph[cur]:
+                check = True
+                for neighbour in neighbours:
+                    if not obj.givenValue[neighbour]:
+                        check = False
+                        break
+                if check and not eval(constraint, {"value": obj.value}):
                     canBeValue = False
                     break
-            if not canBeValue:
-                break
         if not canBeValue:
             continue
         BackTracking(obj, cur + 1, start, timeout)

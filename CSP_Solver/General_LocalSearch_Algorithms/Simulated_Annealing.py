@@ -4,12 +4,16 @@ Cooling :: Linear w.r.t iterations
 from .Util import Instance, big
 from math import exp
 from random import uniform
+from time import clock
 
-def simulated_annealing(obj, iterations = big, temperature = 10000, decreaseConstant = 1):
+def simulated_annealing(obj, iterations = big, temperature = 10000, decreaseConstant = 1, timeout = 10):
+    start = clock()
     global_dictionary = dict()
     obj.createRandomInstance()
     state = Instance(obj, global_dictionary)
     while iterations > 0 and temperature > 0:
+        if clock() - start > timeout:
+            return
         if state.currentFitness == 0:
             break
         va, val, delta = state.randNeighbour(obj)
@@ -20,7 +24,5 @@ def simulated_annealing(obj, iterations = big, temperature = 10000, decreaseCons
         iterations -= 1
         temperature -= decreaseConstant
     if state.currentFitness == 0:
-        print(state.value[1:])
-    else:
-        print("Answer could not be found")
+        obj.stop = 1
         

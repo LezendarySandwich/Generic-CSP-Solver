@@ -77,8 +77,6 @@ def HillClimbing_chooseRandom(obj, known = None, allowedSideMoves = 0, tabuSize 
             allowedSideMoves += neg
             iterations -= 1
     if not ut.FastVerify(obj, Faults):
-        print("Answer does not satisfy all constraints")
         return False
     else:
-        print(obj.value[1:obj.variables + 1])
         return True

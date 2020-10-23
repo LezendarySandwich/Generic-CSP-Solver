@@ -10,15 +10,20 @@ class choice(enum.Enum):
 class Tabu:
     def __init__(self, queueSize):
         self.fifo = Queue(maxsize=queueSize)
-        self.search = set()
+        self.search = dict()
     def removeFirst(self):
         rem = self.fifo.get()
-        self.search.remove(rem)
+        self.search[rem] -= 1
+        if self.search[rem] == 0:
+            self.search.pop(rem)
     def push(self, obj):
         if self.fifo.full():
             self.removeFirst()
         self.fifo.put(tuple(obj.value))
-        self.search.add(tuple(obj.value))
+        if tuple(obj.value) in self.search:
+            self.search[tuple(obj.value)] += 1
+        else :
+            self.search[tuple(obj.value)] = 1
     def find(self, obj):
         return tuple(obj.value) in self.search
 

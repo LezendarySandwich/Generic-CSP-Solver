@@ -1,0 +1,5 @@
+Sudoku
+Params- Number of beams: 81
+Time Taken: 4.8125
+
+No valid solution exist

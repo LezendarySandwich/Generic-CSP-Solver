@@ -1,4 +1,5 @@
 Sudoku
+Time Taken: 0.015625
 
 value[1] : 3
 value[2] : 1

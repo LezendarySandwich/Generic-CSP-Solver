@@ -86,8 +86,6 @@ def HillClimbing_greedyBias(obj, known = None, allowedSideMoves = 0, iterations 
             allowedSideMoves += neg
             iterations -= 1
     if not ut.FastVerify(obj, Faults):
-        print("Answer does not satisfy all constraints")
         return False
     else :
-        print(obj.value[1:])
         return True

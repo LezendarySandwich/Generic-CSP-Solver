@@ -1,6 +1,7 @@
 from copy import deepcopy
 from .Util import Instance
 from numpy.random import choice
+from time import clock
 
 def initialBeam(obj, k, global_dictionary):
     beam = []
@@ -15,14 +16,16 @@ def debugBeam(beam):
     P = [i.value[1:len(i.value)] for i in beam]
     print(P)
 
-def local_beam_search(obj, k):
+def local_beam_search(obj, k, timeout = 10):
+    start = clock()
     global_dictionary = dict()
     beam = initialBeam(obj, k, global_dictionary)
     maxFailure = 0
     for i in range(1, obj.variables + 1):
         maxFailure += len(obj.graph[i])
     while len(beam) > 0:
-        # debugBeam(beam)
+        if clock() - start > timeout:
+            return
         neighbours = []
         for i in range (len(beam)):
             neighbours.extend(beam[i].bestNeighbours(obj, i))
@@ -48,8 +51,4 @@ def local_beam_search(obj, k):
             N.changeVal(obj, va, value, global_dictionary)
             NextBeam.append(N)
         beam = NextBeam
-    if obj.stop:
-        print(obj.value[1:obj.variables + 1])
-    else:
-        print("Answer could not be found")
 

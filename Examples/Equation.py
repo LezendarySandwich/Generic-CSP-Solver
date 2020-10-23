@@ -6,6 +6,7 @@ variables = 3
 a = CS.CSP(variables)
 a.commonDomain([1,2,3,4])
 
-a.add('value[1] + value[2] == value[3]')
+a.add('value[1] + value[2] + value[3] is 7')
+a.add('value[2] ^ value[1] is 1')
 
-a.solve()
+a.solve_BackTrack()

@@ -1,0 +1,5 @@
+Sudoku
+Params- Initial Temperature: 10000; Cooling Coeffecient: 1
+Time Taken: 0.09375
+
+No valid solution exist

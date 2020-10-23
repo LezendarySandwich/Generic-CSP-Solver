@@ -1,18 +1,20 @@
 from CSP_Solver.Util import toRemove, MRV
 from copy import deepcopy
 from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
+from time import clock
 
-def BackTrack(obj, Mrv):
+def BackTrack(obj, Mrv, split, allowedSideMoves, tabuSize, start, timeout):
     if Mrv.finished():
         obj.stop = 1
-        print(obj.value[1:])
+        return
+    if clock() - start > timeout:
         return
     current = Mrv.minimum()
     cur = current[1]
     if len(obj.domains[cur]) == 0:
         return 
-    if Mrv.size() < obj.variables // 2:
-        flag = Hill_Climbing_with_restarts(obj = obj, memoization=True,allowedSideMoves=100,choice=choice.greedyBias,application=150)
+    if Mrv.size() < split:
+        flag = Hill_Climbing_with_restarts(obj = obj, memoization=True,allowedSideMoves=allowedSideMoves,tabuSize=tabuSize,choice=choice.greedyBias,application=obj.variables * 3)
         if flag:
             obj.stop = 1
             return
@@ -25,7 +27,7 @@ def BackTrack(obj, Mrv):
         for rem in Removed:
             Mrv.decrease((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].discard(rem[1])
-        BackTrack(obj, Mrv)
+        BackTrack(obj, Mrv, split, allowedSideMoves, tabuSize, start, timeout)
         if obj.stop:
             return 
         for rem in Removed:
@@ -34,8 +36,10 @@ def BackTrack(obj, Mrv):
     Mrv.add(current)
     obj.givenValue[cur] = False
 
-def My_Algo(obj):
+def My_Algo(obj, split = None, allowedSideMoves = None, tabuSize = 0, timeout = 10):
+    if allowedSideMoves == None:
+        allowedSideMoves = obj.variables << 1
+    split = (obj.variables + 1) // 2 if split is None else split
+    start = clock()
     Mrv = MRV(obj)
-    BackTrack(obj, Mrv)
-    if not obj.stop:
-        print("No valid Solution Exists")
+    BackTrack(obj, Mrv, (obj.variables + 1) // 2, allowedSideMoves, tabuSize, start, timeout)

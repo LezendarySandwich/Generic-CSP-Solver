@@ -1,4 +1,5 @@
 from .Util import MRV, LCV, toRemove, verify, makeConsistent
+from time import clock
 
 def removeArcs(obj, arcs, cur):
     for neighbour in obj.graph[cur]:
@@ -8,11 +9,12 @@ def putArcs(obj, arcs, cur):
     for neighbour in obj.graph[cur]:
         arcs.add((neighbour, cur))
 
-def BackTrack(obj, Mrv, arcs):
+def BackTrack(obj, Mrv, arcs, start, timeout):
     if Mrv.finished():
         obj.stop = 1
-        print(obj.value[1:])
         return
+    if clock() - start > timeout:
+        return 
     current = Mrv.minimum()
     cur = current[1]
     # print(cur,len(obj.domains[cur]))
@@ -31,7 +33,7 @@ def BackTrack(obj, Mrv, arcs):
         for rem in Removed:
             Mrv.decrease((len(obj.domains[rem[0]]),rem[0]))
             obj.domains[rem[0]].discard(rem[1])
-        BackTrack(obj, Mrv, arcs)
+        BackTrack(obj, Mrv, arcs, start, timeout)
         if obj.stop:
             return 
         for rem in Removed:
@@ -45,12 +47,11 @@ def BackTrack(obj, Mrv, arcs):
     obj.givenValue[cur] = False
     # putArcs(obj, arcs, cur)
 
-def ArcConsistent_MRV_LCV(obj):
+def ArcConsistent_MRV_LCV(obj, timeout = 10):
+    start = clock()
     arcs = set()
     for i in range(1,obj.variables + 1):
         for j in obj.graph[i]:
             arcs.add((i,j))
     Mrv = MRV(obj)
-    BackTrack(obj, Mrv, arcs)
-    if not verify(obj):
-        raise Exception("Computed Answer does not satisfy all the constraints")
+    BackTrack(obj, Mrv, arcs, start, timeout)
