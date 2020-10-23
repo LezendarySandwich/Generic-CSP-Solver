@@ -1,12 +1,8 @@
 mapColoring
 Params- Initial Temperature: 10000; Cooling Coeffecient: 1
-Time Taken: 0.015625
+Time Taken: 0.0
 
-value[1] : White
-value[2] : Black
-value[3] : Orange
-value[4] : Pink
-value[5] : Orange
-value[6] : Yellow
-value[7] : Blue
-value[8] : Blue
+value[Lucknow] : Red
+value[Delhi] : Blue
+value[Bengal] : Red
+value[Punjab] : Red

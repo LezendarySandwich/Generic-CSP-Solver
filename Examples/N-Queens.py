@@ -2,7 +2,7 @@ import sys
 sys.path.insert(0, './../')
 import CSP_Solver as CS
 
-n = 55
+n = 5
 N_Queens = CS.CSP(n, problem_name='N-Queens')
 N_Queens.commonDomain([i for i in range(1,n + 1)])
 

@@ -2,11 +2,7 @@ mapColoring
 Params- memoization: True; Allowed Number of Side Moves: 8; Tabu List Size: 0; Allowed Number of iterations: 100000000
 Time Taken: 0.0
 
-value[1] : Red
-value[2] : White
-value[3] : Orange
-value[4] : Pink
-value[5] : Yellow
-value[6] : Indigo
-value[7] : Black
-value[8] : Blue
+value[Lucknow] : Blue
+value[Delhi] : Blue
+value[Bengal] : Red
+value[Punjab] : Yellow

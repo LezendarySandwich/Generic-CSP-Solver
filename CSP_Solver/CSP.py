@@ -30,6 +30,8 @@ class CSP:
         self.stop = 0
         self.problem_name = problem_name
         self.multivariate = False
+        self.currentHelp = 1
+        self.variableConversion = dict()
     
     def commonDomain(self, domain = []):
         """
@@ -59,9 +61,7 @@ class CSP:
         Enforce constraints
         pass comparison as string
         """
-        numbers = []
-        prev = False
-        cur = ""
+        numbers, prev, cur = [], False, ""
         for i in constraint:
             if i == ' ':
                 continue
@@ -70,11 +70,22 @@ class CSP:
                 continue
             if i == ']':
                 prev = False
-                numbers.append(int(cur))
+                if not cur.isnumeric() and cur not in self.variableConversion:
+                    print(cur, self.currentHelp)
+                    self.variableConversion[cur] = self.currentHelp
+                    self.variableConversion[self.currentHelp] = cur
+                    self.currentHelp += 1
+                elif cur.isnumeric(): 
+                    self.variableConversion[cur] = int(cur)
+                    self.variableConversion[int(cur)] = int(cur)
+                numbers.append(self.variableConversion[cur])
                 cur = ""
                 continue
             if prev:
                 cur += i
+        for key in self.variableConversion:
+            if str(key).isnumeric(): continue
+            constraint = constraint.replace(str(key), str(self.variableConversion[key]))
         constraint = compile(constraint, "<string>", "eval")
         if len(numbers) > 2:
             self.multivariate = True
@@ -113,7 +124,7 @@ class CSP:
         else :
             print("Time taken by dfs: ", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -134,7 +145,7 @@ class CSP:
         else :
             print("Time taken by BackTrack: ", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -155,7 +166,7 @@ class CSP:
         else :
             print("Time taken by ForwardChecking: ", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -176,7 +187,7 @@ class CSP:
         else :
             print("Time taken by ForwardChecking_MRV: ", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -197,7 +208,7 @@ class CSP:
         else :
             print("Time taken by ForwardChecking_MRV_LCV: ", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
     
@@ -221,7 +232,7 @@ class CSP:
         else :
             print("Time taken by HillClimbing_chooseBest:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -245,7 +256,7 @@ class CSP:
         else :
             print("Time taken by HillClimbing_greedyBias:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -269,7 +280,7 @@ class CSP:
         else :
             print("Time taken by HillClimbing_chooseRandom:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -293,7 +304,7 @@ class CSP:
         else :
             print("Time taken by Genetic Algorithm:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -317,7 +328,7 @@ class CSP:
         else :
             print("Time taken by local beam search:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -339,7 +350,7 @@ class CSP:
         else :
             print("Time taken by Simulated Annealing:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -360,7 +371,7 @@ class CSP:
         else :
             print("Time taken by Arc Consistent BackTracking:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 
@@ -382,7 +393,7 @@ class CSP:
         else :
             print("Time taken by Novel Algorithm:", end - start)
             for i in range(1,self.variables + 1):
-                wr += "value[" + str(i) + "] : " + str(self.value[i]) + "\n"
+                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
         f.write(wr)
         f.close()
 

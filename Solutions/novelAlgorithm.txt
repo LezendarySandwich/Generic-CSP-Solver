@@ -2,11 +2,7 @@ mapColoring
 Params- Split: None; Allowed Number of Side Moves: None; Size of Tabu List: 0
 Time Taken: 0.0
 
-value[1] : Indigo
-value[2] : Yellow
-value[3] : Red
-value[4] : Black
-value[5] : Orange
-value[6] : White
-value[7] : Pink
-value[8] : Blue
+value[Lucknow] : Red
+value[Delhi] : Red
+value[Bengal] : Blue
+value[Punjab] : Yellow

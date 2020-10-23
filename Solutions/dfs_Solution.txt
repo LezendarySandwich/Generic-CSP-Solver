@@ -1,4 +1,7 @@
-Equation
-Time Taken: 2.015625
+mapColoring
+Time Taken: 0.0
 
-dfs timed out
+value[Lucknow] : Red
+value[Delhi] : Red
+value[Bengal] : Blue
+value[Punjab] : Red

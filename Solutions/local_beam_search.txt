@@ -1,12 +1,8 @@
 mapColoring
-Params- Number of beams: 16
+Params- Number of beams: 8
 Time Taken: 0.0
 
-value[1] : Orange
-value[2] : Indigo
-value[3] : Yellow
-value[4] : Red
-value[5] : White
-value[6] : Pink
-value[7] : Black
-value[8] : Blue
+value[Lucknow] : Yellow
+value[Delhi] : Yellow
+value[Bengal] : Blue
+value[Punjab] : Yellow

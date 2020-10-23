@@ -1,13 +1,7 @@
-Equation
-Time Taken: 1.453125
+mapColoring
+Time Taken: 0.0
 
-value[1] : 3
-value[2] : 1
-value[3] : 5
-value[4] : 1
-value[5] : 1
-value[6] : 1
-value[7] : 4
-value[8] : 1
-value[9] : 60
-value[10] : 60
+value[Lucknow] : Red
+value[Delhi] : Red
+value[Bengal] : Yellow
+value[Punjab] : Red

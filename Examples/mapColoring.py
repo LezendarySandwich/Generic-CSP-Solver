@@ -6,8 +6,6 @@ variables = 8
 mapColoring = CS.CSP(variables, problem_name='mapColoring')
 mapColoring.commonDomain(['Red', 'Blue', 'Yellow', 'Indigo', 'Pink', 'Black', 'White', 'Orange'])
 
-mapColoring.testAllDefaultParams(timeout = 2)
-
 for i in range(1,variables + 1):
     for j in range(i + 1, variables + 1):
         mapColoring.addConstraint('value[' + str(i) + '] is not value[' + str(j) + ']')

@@ -1,12 +1,8 @@
 mapColoring
-Params- Size of Population: 8; Allowed Number of Generations 100000000
+Params- Size of Population: 4; Allowed Number of Generations 100000000
 Time Taken: 0.0
 
-value[1] : Indigo
-value[2] : Yellow
-value[3] : White
-value[4] : Black
-value[5] : Orange
-value[6] : Pink
-value[7] : Red
-value[8] : Blue
+value[Lucknow] : Blue
+value[Delhi] : Blue
+value[Bengal] : Yellow
+value[Punjab] : Red
