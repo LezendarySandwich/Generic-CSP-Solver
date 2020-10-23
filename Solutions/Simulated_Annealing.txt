@@ -1,5 +1,5 @@
-Sudoku
+N-Queens
 Params- Initial Temperature: 10000; Cooling Coeffecient: 1
-Time Taken: 0.09375
+Time Taken: 0.15625
 
 No valid solution exist

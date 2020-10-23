@@ -11,7 +11,7 @@ for i in range(1,a.variables+1):
         a.add('value['+str(i)+'] != value['+str(j)+']')
         a.add('abs(value['+str(j)+'] - value['+str(i)+']) != '+str(j)+'-'+str(i))
 
-a.solve_BackTrack(timeout = 2)
+a.testAllDefaultParams(timeout = 2)
 
 if a.stop == 1:
     for val in range(1,n + 1):

@@ -9,8 +9,8 @@ def BackTracking(obj, cur, start, timeout):
         return
     obj.givenValue[cur] = True
     for value in obj.domains[cur]:
-        Removed = toRemove(obj, cur, value)
         Possible = True
+        Removed = toRemove(obj, cur, value)
         for rem in Removed:
             obj.domains[rem[0]].discard(rem[1])
             if len(obj.domains[rem[0]]) == 0:

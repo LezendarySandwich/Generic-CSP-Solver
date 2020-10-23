@@ -1,6 +1,6 @@
 from CSP_Solver.Util import toRemove, MRV
 from copy import deepcopy
-from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
+from CSP_Solver.Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
 from time import clock
 
 def BackTrack(obj, Mrv, split, allowedSideMoves, tabuSize, start, timeout):

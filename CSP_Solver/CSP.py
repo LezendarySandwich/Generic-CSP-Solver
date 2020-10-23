@@ -9,12 +9,11 @@ from .Forward_Checking.ForwardChecking_MRV import ForwardChecking_MRV
 from .Forward_Checking.ForwardChecking_MRV_LCV import ForwardChecking_MRV_LCV
 from .Hill_Climbing.Hill_Climbing_Util import choice
 from .Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts
-from .Hill_Climbing.Hill_Climbing import HillClimbing
 from .Genetic_Algo.Genetic_Solver import Genetic_Solver
 from .General_LocalSearch_Algorithms.local_beam_search import local_beam_search
 from .General_LocalSearch_Algorithms.Simulated_Annealing import simulated_annealing
-from .Arc_Consistent_Backtracking import ArcConsistent_MRV_LCV
-from .My_Algorithm import My_Algo
+from .ArcConsistency.Arc_Consistent_Backtracking import ArcConsistent_MRV_LCV
+from .Novel_Approach.My_Algorithm import My_Algo
 
 class CSP:
     def __init__(self, variables, problem_name = 'CSP'):
@@ -96,6 +95,7 @@ class CSP:
             print ("dfs timed out")
             wr += "dfs timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by dfs: ", end - start)
@@ -116,6 +116,7 @@ class CSP:
             print ("BackTrack timed out")
             wr += "BackTrack timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by BackTrack: ", end - start)
@@ -136,6 +137,7 @@ class CSP:
             print ("ForwardChecking timed out")
             wr += "ForwardChecking timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by ForwardChecking: ", end - start)
@@ -156,6 +158,7 @@ class CSP:
             print ("ForwardChecking_MRV timed out")
             wr += "ForwardChecking_MRV timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by ForwardChecking_MRV: ", end - start)
@@ -176,6 +179,7 @@ class CSP:
             print ("ForwardChecking_MRV_LCV timed out")
             wr += "ForwardChecking_MRV_LCV timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by ForwardChecking_MRV_LCV: ", end - start)
@@ -199,6 +203,7 @@ class CSP:
             print ("HillClimbing_chooseBest timed out")
             wr += "HillClimbing_chooseBest timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by HillClimbing_chooseBest:", end - start)
@@ -222,6 +227,7 @@ class CSP:
             print ("HillClimbing_greedyBias timed out")
             wr += "HillClimbing_greedyBias timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by HillClimbing_greedyBias:", end - start)
@@ -245,6 +251,7 @@ class CSP:
             print ("HillClimbing_chooseRandom timed out")
             wr += "HillClimbing_chooseRandom timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by HillClimbing_chooseRandom:", end - start)
@@ -268,6 +275,7 @@ class CSP:
             print ("Genetic Algorithm timed out")
             wr += "Genetic Algorithm timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by Genetic Algorithm:", end - start)
@@ -291,6 +299,7 @@ class CSP:
             print ("local beam search timed out")
             wr += "local beam search timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by local beam search:", end - start)
@@ -312,6 +321,7 @@ class CSP:
             print ("Simulated Annealing timed out")
             wr += "Simulated Annealing timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by Simulated Annealing:", end - start)
@@ -332,6 +342,7 @@ class CSP:
             print ("Arc Consistent BackTracking timed out")
             wr += "Arc Consistent BackTracking timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by Arc Consistent BackTracking:", end - start)
@@ -353,6 +364,7 @@ class CSP:
             print ("Novel Algorithm timed out")
             wr += "Novel Algorithm BackTracking timed out"
         elif self.stop == 0:
+            print("No valid solution exist")
             wr += "No valid solution exist"
         else :
             print("Time taken by Novel Algorithm:", end - start)
@@ -373,7 +385,7 @@ class CSP:
         self.solve_GeneticAlgo(timeout = timeout)
         self.solve_local_beam_search(timeout = timeout)
         self.solve_Simulated_Annealing(timeout = timeout)
-        self.solve_ArcConsistent_BackTracking(timeout = timeout)
+        # self.solve_ArcConsistent_BackTracking(timeout = timeout)
         self.solve_novelAlgorithm(timeout = timeout)
 
     def createRandomInstance(self):

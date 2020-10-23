@@ -1,13 +1,6 @@
-from .Util import MRV, LCV, toRemove, verify, makeConsistent
+from CSP_Solver.Util import MRV, LCV, toRemove, verify
+from .ArcConsistency_Util import makeConsistent, removeArcs, putArcs
 from time import clock
-
-def removeArcs(obj, arcs, cur):
-    for neighbour in obj.graph[cur]:
-        arcs.remove((neighbour, cur))
-
-def putArcs(obj, arcs, cur):
-    for neighbour in obj.graph[cur]:
-        arcs.add((neighbour, cur))
 
 def BackTrack(obj, Mrv, arcs, start, timeout):
     if Mrv.finished():

@@ -1,5 +1,14 @@
-Sudoku
-Params- memoization: True; Allowed Number of Side Moves: 81; Tabu List Size: 0; Allowed Number of iterations: 100000000
-Time Taken: 20.015625
+N-Queens
+Params- memoization: True; Allowed Number of Side Moves: 10; Tabu List Size: 0; Allowed Number of iterations: 100000000
+Time Taken: 0.046875
 
-HillClimbing_greedyBias timed out
+value[1] : 1
+value[2] : 8
+value[3] : 2
+value[4] : 9
+value[5] : 6
+value[6] : 3
+value[7] : 10
+value[8] : 4
+value[9] : 7
+value[10] : 5

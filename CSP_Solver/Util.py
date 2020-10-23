@@ -35,69 +35,62 @@ class MRV:
 
 def LCV(obj, cur):
     Values = []
-    for value in obj.domains[cur]:
-        curr = 0
-        obj.value[cur] = value
-        for neighbour in obj.graph[cur]:
-            if obj.givenValue[neighbour] == True:
-                continue
-            for Nval in obj.domains[neighbour]:
-                obj.value[neighbour] = Nval
-                for constraint in obj.graphConstraints[cur][neighbour]:
-                    if not eval(constraint,{"value":obj.value}):
-                        curr += 1
-                        break
-        Values.append((curr, value))
+    if not obj.multivariate:
+        for value in obj.domains[cur]:
+            curr = 0
+            obj.value[cur] = value
+            for neighbour in obj.graph[cur]:
+                if obj.givenValue[neighbour] == True:
+                    continue
+                for Nval in obj.domains[neighbour]:
+                    obj.value[neighbour] = Nval
+                    for constraint in obj.graphConstraints[cur][neighbour]:
+                        if not eval(constraint,{"value":obj.value}):
+                            curr += 1
+                            break
+            Values.append((curr, value))
+    else:
+        for value in obj.domains[cur]:
+            obj.value[cur] = value
+            curr = 0
+            for constraint, neighbours in obj.multivariateGraph[cur]:
+                left, remaining = len(neighbours), -1
+                for neighbour in neighbours:
+                    left -= 1 if obj.givenValue[neighbour] else 0
+                    remaining = remaining if obj.givenValue[neighbour] else neighbour
+                if left is 1:
+                    for val in obj.domains[remaining]:
+                        obj.value[remaining] = val
+                        curr += 1 if not eval(constraint, {"value": obj.value}) else 0
+            Values.append((curr, value))
     Values.sort()
     return Values
 
 def toRemove(obj, cur, value):
     Removed = []
     obj.value[cur] = value
-    for neighbour in obj.graph[cur]:
-        if obj.givenValue[neighbour]:
-            continue
-        for Nval in obj.domains[neighbour]:
-            obj.value[neighbour] = Nval
-            for constraint in obj.graphConstraints[cur][neighbour]:
-                if not eval(constraint,{"value":obj.value}):
-                    Removed.append((neighbour, Nval))
-                    break
-    return Removed
-
-def RemoveInconsistent(obj, arc, Removed):
-    remove = []
-    x, y = arc
-    for valx in obj.domains[x]:
-        satisfies = False
-        obj.value[x] = valx
-        for valy in obj.domains[y]:
-            sat = True
-            obj.value[y] = valy
-            for constraint in obj.graphConstraints[x][y]:
-                if not eval(constraint, {"value":obj.value}):
-                    sat = False
-                    break
-            if sat:
-                satisfies = True
-                break
-        if not satisfies:
-            remove.append((x, valx))
-    for x, valx in remove:
-        obj.domains[x].remove(valx)
-    Removed += remove
-    return len(remove) > 0
-
-def makeConsistent(obj, setOfArcs):
-    # Arcs should be as tuple in listOfArcs
-    # arc(x,y) : x -> y
-    Removed = []
-    while len(setOfArcs) > 0:
-        arc = setOfArcs.pop()
-        if RemoveInconsistent(obj, arc, Removed):
-            for neighbour in obj.graph[arc[0]]:
-                # if not obj.givenValue[neighbour]: 
-                    setOfArcs.add((neighbour, arc[0]))
+    if not obj.multivariate:
+        for neighbour in obj.graph[cur]:
+            if obj.givenValue[neighbour]:
+                continue
+            for Nval in obj.domains[neighbour]:
+                obj.value[neighbour] = Nval
+                for constraint in obj.graphConstraints[cur][neighbour]:
+                    if not eval(constraint,{"value":obj.value}):
+                        Removed.append((neighbour, Nval))
+                        break
+    else:
+        for constraint, neighbours in obj.multivariateGraph[cur]:
+            left = len(neighbours)
+            remaining = -1
+            for neighbour in neighbours:
+                left -= 1 if obj.givenValue[neighbour] else 0
+                remaining = remaining if obj.givenValue[neighbour] else neighbour
+            if left is 1:
+                for val in obj.domains[remaining]:
+                    obj.value[remaining] = val
+                    if not eval(constraint, {"value": obj.value}):
+                        Removed.append((remaining, val))
     return Removed
 
 def verify(obj, getFault = False):

@@ -1,5 +1,14 @@
-Sudoku
-Params- memoization: True; Allowed Number of Side Moves: 81; Tabu List Size: 0; Allowed Number of iterations: 100000000
-Time Taken: 20.015625
+N-Queens
+Params- memoization: True; Allowed Number of Side Moves: 10; Tabu List Size: 0; Allowed Number of iterations: 100000000
+Time Taken: 0.015625
 
-HillClimbing_chooseRandom timed out
+value[1] : 7
+value[2] : 2
+value[3] : 4
+value[4] : 8
+value[5] : 10
+value[6] : 5
+value[7] : 9
+value[8] : 6
+value[9] : 1
+value[10] : 3

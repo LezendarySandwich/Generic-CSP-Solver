@@ -1,4 +1,4 @@
-Sudoku
-Time Taken: 20.015625
+N-Queens
+Time Taken: 2.015625
 
 dfs timed out
