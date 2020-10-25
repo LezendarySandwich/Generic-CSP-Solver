@@ -1,8 +1,5 @@
-mapColoring
-Params- Number of beams: 8
+1
+Params- Number of beams: 2
 Time Taken: 0.0
 
-value[Lucknow] : Yellow
-value[Delhi] : Yellow
-value[Bengal] : Blue
-value[Punjab] : Yellow
+value[1] : 31

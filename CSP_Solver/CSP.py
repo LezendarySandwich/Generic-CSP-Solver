@@ -16,7 +16,7 @@ from .ArcConsistency.Arc_Consistent_Backtracking import ArcConsistent_MRV_LCV
 from .Novel_Approach.My_Algorithm import My_Algo
 
 class CSP:
-    def __init__(self, variables, problem_name = 'CSP'):
+    def __init__(self, variables, solution_path = './', problem_name = 'CSP'):
         random.seed(datetime.now())
         self.variables = variables
         self.domains = [set() for i in range(variables + 1)]
@@ -32,6 +32,9 @@ class CSP:
         self.multivariate = False
         self.currentHelp = 1
         self.variableConversion = dict()
+        for i in range(1,variables + 1):
+            self.variableConversion[i] = i
+        self.solution_path = solution_path
     
     def commonDomain(self, domain = []):
         """
@@ -46,15 +49,15 @@ class CSP:
         """
         To separately set domain values for variables
         """
-        self.domainHelp[variable] = deepcopy(domain)
-        self.domains[variable] = set(domain)
+        self.domainHelp[self.variableConversion[variable]] = deepcopy(domain)
+        self.domains[self.variableConversion[variable]] = set(domain)
 
     def setValue(self, variable, value):
         """
         To Enforce Unary Constraints
         """
-        self.domainHelp[variable] = [value]
-        self.domains[variable] = {value}
+        self.domainHelp[self.variableConversion[variable]] = [value]
+        self.domains[self.variableConversion[variable]] = {value}
 
     def addConstraint(self, constraint):
         """
@@ -112,7 +115,7 @@ class CSP:
         start = time.clock()
         dfs(self, timeout)
         end = time.clock()
-        f = open('../Solutions/dfs_Solution.txt', 'w')
+        f = open(self.solution_path + 'dfs_Solution.txt', 'w')
         wr = self.problem_name + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
         if end - start > timeout:
@@ -133,7 +136,7 @@ class CSP:
         start = time.clock()
         BackTrack(self, timeout)
         end = time.clock()
-        f = open('../Solutions/BackTrack_Solution.txt', 'w')
+        f = open(self.solution_path + 'BackTrack_Solution.txt', 'w')
         wr = self.problem_name + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
         if end - start > timeout:
@@ -154,7 +157,7 @@ class CSP:
         start = time.clock()
         ForwardChecking(self, timeout)
         end = time.clock()
-        f = open('../Solutions/ForwardChecking_Solution.txt', 'w')
+        f = open(self.solution_path + 'ForwardChecking_Solution.txt', 'w')
         wr = self.problem_name + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
         if end - start > timeout:
@@ -175,7 +178,7 @@ class CSP:
         start = time.clock()
         ForwardChecking_MRV(self, timeout)
         end = time.clock()
-        f = open('../Solutions/ForwardChecking_MRV_Solution.txt', 'w')
+        f = open(self.solution_path + 'ForwardChecking_MRV_Solution.txt', 'w')
         wr = self.problem_name + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
         if end - start > timeout:
@@ -196,7 +199,7 @@ class CSP:
         start = time.clock()
         ForwardChecking_MRV_LCV(self, timeout)
         end = time.clock()
-        f = open('../Solutions/ForwardChecking_MRV_LCV_Solution.txt', 'w')
+        f = open(self.solution_path + 'ForwardChecking_MRV_LCV_Solution.txt', 'w')
         wr = self.problem_name + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
         if end - start > timeout:
@@ -219,7 +222,7 @@ class CSP:
         start = time.clock()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.chooseBest, timeout = timeout)
         end = time.clock()
-        f = open('../Solutions/HillClimbing_chooseBest.txt', 'w')
+        f = open(self.solution_path + 'HillClimbing_chooseBest.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
@@ -243,7 +246,7 @@ class CSP:
         start = time.clock()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.greedyBias, timeout = timeout)
         end = time.clock()
-        f = open('../Solutions/HillClimbing_greedyBias.txt', 'w')
+        f = open(self.solution_path + 'HillClimbing_greedyBias.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
@@ -267,7 +270,7 @@ class CSP:
         start = time.clock()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.chooseRandom, timeout = timeout)
         end = time.clock()
-        f = open('../Solutions/HillClimbing_chooseRandom.txt', 'w')
+        f = open(self.solution_path + 'HillClimbing_chooseRandom.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
@@ -287,11 +290,11 @@ class CSP:
     def solve_GeneticAlgo(self, populationSize = None, generations = big, timeout = 10):
         self.reset()
         if populationSize == None:
-            populationSize = self.variables
+            populationSize = self.variables << 1
         start = time.clock()
         Genetic_Solver(obj = self, populationSize = populationSize, generations = generations, timeout = timeout)
         end = time.clock()
-        f = open('../Solutions/GeneticAlgorithm.txt', 'w')
+        f = open(self.solution_path + 'GeneticAlgorithm.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- Size of Population: " + str(populationSize) + "; Allowed Number of Generations " + str(generations) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
@@ -315,7 +318,7 @@ class CSP:
         start = time.clock()
         local_beam_search(obj = self, k = beams, timeout = timeout)
         end = time.clock()
-        f = open('../Solutions/local_beam_search.txt', 'w')
+        f = open(self.solution_path + 'local_beam_search.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- Number of beams: " + str(beams) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
@@ -335,9 +338,11 @@ class CSP:
     def solve_Simulated_Annealing(self, iterations = big, initialTemperature = 10000, cooling_coefficient = 1, timeout = 10):
         self.reset()
         start = time.clock()
-        simulated_annealing(obj = self, iterations=iterations, temperature=initialTemperature, decreaseConstant=cooling_coefficient, timeout = timeout)
+        while time.clock() - start < timeout:
+            simulated_annealing(obj = self, iterations=iterations, temperature=initialTemperature, decreaseConstant=cooling_coefficient, timeout = timeout)
+            if self.stop == 1: break
         end = time.clock()
-        f = open('../Solutions/Simulated_Annealing.txt', 'w')
+        f = open(self.solution_path + 'Simulated_Annealing.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- Initial Temperature: " + str(initialTemperature) + '; Cooling Coeffecient: ' + str(cooling_coefficient) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
@@ -359,7 +364,7 @@ class CSP:
         start = time.clock()
         ArcConsistent_MRV_LCV(obj = self, timeout = timeout)
         end = time.clock()
-        f = open('../Solutions/ArcConsistent_BackTracking.txt', 'w')
+        f = open(self.solution_path + 'ArcConsistent_BackTracking.txt', 'w')
         wr = self.problem_name + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'
         if end - start > timeout:
@@ -375,12 +380,14 @@ class CSP:
         f.write(wr)
         f.close()
 
-    def solve_novelAlgorithm(self, split = None, allowedSideMoves = None, tabuSize = 0, timeout = 10):
+    def solve_novelAlgorithm(self, split = None, allowedSideMoves = None, tabuSize = 0, tries = None, timeout = 10):
         self.reset()
+        if tries is None: tries = self.variables * 3
+        if allowedSideMoves is None: allowedSideMoves = self.variables << 1
         start = time.clock()
-        My_Algo(obj = self, split=split, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, timeout=timeout)
+        My_Algo(obj = self, split=split, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, tries = tries, timeout=timeout)
         end = time.clock()
-        f = open('../Solutions/novelAlgorithm.txt', 'w')
+        f = open(self.solution_path + 'novelAlgorithm.txt', 'w')
         wr = self.problem_name + '\n'
         wr += "Params- Split: " + str(split) + '; Allowed Number of Side Moves: ' + str(allowedSideMoves) + '; Size of Tabu List: ' + str(tabuSize) + '\n'
         wr += 'Time Taken: ' + str(end - start) + '\n\n'

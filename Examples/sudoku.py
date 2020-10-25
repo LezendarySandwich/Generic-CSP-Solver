@@ -2,8 +2,20 @@ import sys
 sys.path.insert(0, './../')
 import CSP_Solver as CS
 
+def print_solution(Sudoku):
+    if Sudoku.stop == 1:
+        for i in range(1, variables + 1):
+            if (i - 1) % 9 == 0:
+                print('|', sep='', end='')
+            print('|', sep='', end='')
+            print(Sudoku.value[i], end='')
+            if i % 3 == 0:
+                print('|', sep='', end='')
+            if i % 9 == 0:
+                print('|')
+
 variables = 81
-Sudoku = CS.CSP(variables, problem_name='Sudoku')
+Sudoku = CS.CSP(variables, problem_name='Sudoku', solution_path = './../Solutions/')
 Sudoku.commonDomain([i for i in range(1, 10)])
 
 for i in range(1,variables + 1):
@@ -30,15 +42,6 @@ for i in range(0,9):
         if grid[i][j] != 0:
             Sudoku.setValue(i * 9 + j + 1, grid[i][j])
             
-Sudoku.testAllDefaultParams(timeout = 20)
+Sudoku.testAllDefaultParams(timeout = 1)
 
-if Sudoku.stop == 1:
-    for i in range(1, variables + 1):
-        if (i - 1) % 9 == 0:
-            print('|', sep='', end='')
-        print('|', sep='', end='')
-        print(Sudoku.value[i], end='')
-        if i % 3 == 0:
-            print('|', sep='', end='')
-        if i % 9 == 0:
-            print('|')
+print_solution(Sudoku)

@@ -3,7 +3,7 @@ sys.path.insert(0, './../')
 import CSP_Solver as CS
 
 variables = 8
-mapColoring = CS.CSP(variables, problem_name='mapColoring')
+mapColoring = CS.CSP(variables, problem_name='mapColoring', solution_path='./../Solutions/')
 mapColoring.commonDomain(['Red', 'Blue', 'Yellow', 'Indigo', 'Pink', 'Black', 'White', 'Orange'])
 
 for i in range(1,variables + 1):

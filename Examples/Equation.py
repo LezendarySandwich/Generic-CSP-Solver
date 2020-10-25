@@ -3,7 +3,7 @@ sys.path.insert(0, './../')
 import CSP_Solver as CS
 
 variables = 10
-Equation = CS.CSP(variables, 'Equation')
+Equation = CS.CSP(variables, problem_name='Equation',solution_path='./../Solutions/')
 Equation.commonDomain([i for i in range(1,100)])
 
 Equation.addConstraint('value[1] + value[2] + value[3] is 9')

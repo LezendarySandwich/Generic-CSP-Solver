@@ -1,7 +1,4 @@
-mapColoring
+1
 Time Taken: 0.0
 
-value[Lucknow] : Blue
-value[Delhi] : Blue
-value[Bengal] : Yellow
-value[Punjab] : Blue
+value[1] : 1

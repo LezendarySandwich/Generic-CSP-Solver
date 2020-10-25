@@ -36,6 +36,7 @@ def TabuIter(obj, Faults, known, allowedSideMoves, tabu):
     obj.value[va] = val
     if mn == 0 and tabu.find(obj):
         obj.value[va] = previous
+        tabu.removeFirst()
         return True, 0
     else:
         tabu.push(obj)

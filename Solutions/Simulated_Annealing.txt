@@ -1,8 +1,5 @@
-mapColoring
+1
 Params- Initial Temperature: 10000; Cooling Coeffecient: 1
 Time Taken: 0.0
 
-value[Lucknow] : Red
-value[Delhi] : Blue
-value[Bengal] : Red
-value[Punjab] : Red
+value[1] : 16

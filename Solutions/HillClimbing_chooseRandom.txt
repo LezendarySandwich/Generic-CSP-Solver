@@ -1,8 +1,5 @@
-mapColoring
-Params- memoization: True; Allowed Number of Side Moves: 8; Tabu List Size: 0; Allowed Number of iterations: 100000000
+1
+Params- memoization: True; Allowed Number of Side Moves: 2; Tabu List Size: 0; Allowed Number of iterations: 100000000
 Time Taken: 0.0
 
-value[Lucknow] : Blue
-value[Delhi] : Blue
-value[Bengal] : Red
-value[Punjab] : Yellow
+value[1] : 73

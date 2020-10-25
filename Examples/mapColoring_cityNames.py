@@ -3,7 +3,7 @@ sys.path.insert(0, './../')
 import CSP_Solver as CS
 
 variables = 4
-mapColoring = CS.CSP(variables, problem_name='mapColoring')
+mapColoring = CS.CSP(variables, problem_name='mapColoring', solution_path='./../Solutions/')
 mapColoring.commonDomain(['Red', 'Blue', 'Yellow'])
 
 mapColoring.addConstraint('value[Lucknow] is value[Delhi]')

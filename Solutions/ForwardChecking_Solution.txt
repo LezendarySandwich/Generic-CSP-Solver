@@ -1,7 +1,6 @@
-mapColoring
+Equation
 Time Taken: 0.0
 
-value[Lucknow] : Red
-value[Delhi] : Red
-value[Bengal] : Yellow
-value[Punjab] : Red
+value[1] : 1
+value[2] : 6
+value[3] : 7
