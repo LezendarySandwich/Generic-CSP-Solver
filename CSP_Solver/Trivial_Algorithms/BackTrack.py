@@ -2,10 +2,10 @@
 Works for bivariate as well as multivariate constraints
 """
 
-from time import clock
+from time import time
 
 def BackTracking(obj, cur, start, timeout):
-    if clock() - start > timeout:
+    if time() - start > timeout:
         return 
     if cur > obj.variables:
         obj.stop = 1
@@ -42,5 +42,5 @@ def BackTracking(obj, cur, start, timeout):
     obj.givenValue[cur] = False
 
 def BackTrack(obj, timeout = 10):
-    start = clock()
+    start = time()
     BackTracking(obj, 1, start, timeout)

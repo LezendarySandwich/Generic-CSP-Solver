@@ -3,10 +3,10 @@ Works for bivariate as well as multivariate constraints
 """
 
 from CSP_Solver.Util import verify
-from time import clock
+from time import time
 
 def BackTracking(obj, cur, start, timeout):
-    if clock() - start > timeout:
+    if time() - start > timeout:
         return
     if cur > obj.variables:
         if verify(obj):
@@ -21,5 +21,5 @@ def BackTracking(obj, cur, start, timeout):
         obj.givenValue[cur] = True
 
 def dfs(obj, timeout = 10):
-    start = clock()
+    start = time()
     BackTracking(obj, 1, start, timeout)

@@ -1,5 +1,0 @@
-1
-Params- Initial Temperature: 10000; Cooling Coeffecient: 1
-Time Taken: 0.0
-
-value[1] : 16

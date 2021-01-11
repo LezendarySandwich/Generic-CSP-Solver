@@ -1,7 +1,7 @@
 from copy import deepcopy
 from .Util import Instance
 from numpy.random import choice
-from time import clock
+from time import time
 
 def initialBeam(obj, k, global_dictionary):
     beam = []
@@ -17,14 +17,14 @@ def debugBeam(beam):
     print(P)
 
 def local_beam_search(obj, k, timeout = 10):
-    start = clock()
+    start = time()
     global_dictionary = dict()
     beam = initialBeam(obj, k, global_dictionary)
     maxFailure = 0
     for i in range(1, obj.variables + 1):
         maxFailure += len(obj.graph[i])
     while len(beam) > 0:
-        if clock() - start > timeout:
+        if time() - start > timeout:
             return
         neighbours = []
         for i in range (len(beam)):

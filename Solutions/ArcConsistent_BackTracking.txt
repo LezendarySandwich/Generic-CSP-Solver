@@ -1,4 +1,0 @@
-1
-Time Taken: 0.0
-
-value[1] : 1

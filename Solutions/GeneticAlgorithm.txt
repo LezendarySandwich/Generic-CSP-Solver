@@ -1,5 +1,0 @@
-1
-Params- Size of Population: 2; Allowed Number of Generations 100000000
-Time Taken: 0.0
-
-value[1] : 6

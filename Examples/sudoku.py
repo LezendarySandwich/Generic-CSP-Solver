@@ -15,7 +15,7 @@ def print_solution(Sudoku):
                 print('|')
 
 variables = 81
-Sudoku = CS.CSP(variables, problem_name='Sudoku', solution_path = './../Solutions/')
+Sudoku = CS.CSP(variables, problem_name='Sudoku')
 Sudoku.commonDomain([i for i in range(1, 10)])
 
 for i in range(1,variables + 1):

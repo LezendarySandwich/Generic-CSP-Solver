@@ -1,12 +1,12 @@
 from CSP_Solver.Util import MRV, LCV, toRemove, verify
 from .ArcConsistency_Util import makeConsistent, removeArcs, putArcs
-from time import clock
+from time import time
 
 def BackTrack(obj, Mrv, arcs, start, timeout):
     if Mrv.finished():
         obj.stop = 1
         return
-    if clock() - start > timeout:
+    if time() - start > timeout:
         return 
     current = Mrv.minimum()
     cur = current[1]
@@ -39,7 +39,7 @@ def BackTrack(obj, Mrv, arcs, start, timeout):
     putArcs(obj, arcs, removed)
 
 def ArcConsistent_MRV_LCV(obj, timeout = 10):
-    start = clock()
+    start = time()
     arcs = set()
     for i in range(1,obj.variables + 1):
         for j in obj.graph[i]:

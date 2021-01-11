@@ -1,5 +1,0 @@
-1
-Params- Split: None; Allowed Number of Side Moves: 2; Size of Tabu List: 0
-Time Taken: 0.0
-
-value[1] : 1

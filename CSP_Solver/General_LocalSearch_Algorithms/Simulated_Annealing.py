@@ -4,15 +4,15 @@ Cooling :: Linear w.r.t iterations
 from .Util import Instance, big
 from math import exp
 from random import uniform
-from time import clock
+from time import time
 
 def simulated_annealing(obj, iterations = big, temperature = 10000, decreaseConstant = 1, timeout = 10):
-    start = clock()
+    start = time()
     global_dictionary = dict()
     obj.createRandomInstance()
     state = Instance(obj, global_dictionary)
     while iterations > 0 and temperature > 0:
-        if clock() - start > timeout:
+        if time() - start > timeout:
             return
         if state.currentFitness == 0:
             break

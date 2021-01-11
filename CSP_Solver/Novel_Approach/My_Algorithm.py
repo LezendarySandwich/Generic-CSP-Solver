@@ -1,13 +1,13 @@
 from CSP_Solver.Util import toRemove, MRV
 from copy import deepcopy
 from CSP_Solver.Hill_Climbing.Hill_Climbing_with_restarts import Hill_Climbing_with_restarts, choice
-from time import clock
+from time import time
 
 def BackTrack(obj, Mrv, split, allowedSideMoves, tabuSize, tries, start, timeout):
     if Mrv.finished():
         obj.stop = 1
         return
-    if clock() - start > timeout:
+    if time() - start > timeout:
         return
     current = Mrv.minimum()
     cur = current[1]
@@ -40,6 +40,6 @@ def My_Algo(obj, split = None, allowedSideMoves = None, tabuSize = 0, tries = No
     if allowedSideMoves == None:
         allowedSideMoves = obj.variables << 1
     split = (obj.variables + 1) // 2 if split is None else split
-    start = clock()
+    start = time()
     Mrv = MRV(obj)
     BackTrack(obj, Mrv, (obj.variables + 1) // 2, allowedSideMoves, tabuSize, tries, start, timeout)

@@ -21,7 +21,7 @@ Equation.addConstraint('value[8] ^ value[9] + value[4] is value[10]')
 Equation.addConstraint('(value[8] & value[9]) | value[4] < value[10] - 5 * value[3]')
 Equation.addConstraint('value[1] * value[2] // value[3] < value[7]')
 
-Equation.testAllDefaultParams(timeout = 2)
+Equation.testAllDefaultParams(timeout = 5)
 
 for i in range(1, variables + 1):
     print('Value of variable', i, ':', Equation.value[i])

@@ -3,10 +3,10 @@ Works for bivariate as well as multivariate constraints
 """
 
 from CSP_Solver.Util import toRemove, MRV
-from time import clock
+from time import time
 
 def BackTrack(obj, Mrv, start, timeout):
-    if clock() - start > timeout:
+    if time() - start > timeout:
         return 
     if Mrv.finished():
         obj.stop = 1
@@ -32,6 +32,6 @@ def BackTrack(obj, Mrv, start, timeout):
     obj.givenValue[cur] = False
 
 def ForwardChecking_MRV(obj, timeout):
-    start = clock()
+    start = time()
     Mrv = MRV(obj)
     BackTrack(obj, Mrv, start, timeout)

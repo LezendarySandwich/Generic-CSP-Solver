@@ -14,7 +14,7 @@ def print_solution(N_Queens):
                 print('|', sep='', end='')
             print()
 
-n = 5
+n = 100
 N_Queens = CS.CSP(n, problem_name='N-Queens', solution_path='./../Solutions/')
 N_Queens.commonDomain([i for i in range(1,n + 1)])
 
@@ -23,6 +23,6 @@ for i in range(1,N_Queens.variables+1):
         N_Queens.addConstraint('value['+str(i)+'] != value['+str(j)+']')
         N_Queens.addConstraint('abs(value['+str(j)+'] - value['+str(i)+']) != '+str(j)+'-'+str(i))
 
-N_Queens.testAllDefaultParams(timeout = 60)
+N_Queens.solve_novelAlgorithm(timeout = 60)
 
 print_solution(N_Queens)

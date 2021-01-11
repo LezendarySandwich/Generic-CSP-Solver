@@ -16,7 +16,7 @@ from .ArcConsistency.Arc_Consistent_Backtracking import ArcConsistent_MRV_LCV
 from .Novel_Approach.My_Algorithm import My_Algo
 
 class CSP:
-    def __init__(self, variables, solution_path = './', problem_name = 'CSP'):
+    def __init__(self, variables, solution_path = None, problem_name = 'CSP'):
         random.seed(datetime.now())
         self.variables = variables
         self.domains = [set() for i in range(variables + 1)]
@@ -34,7 +34,7 @@ class CSP:
         self.variableConversion = dict()
         for i in range(1,variables + 1):
             self.variableConversion[i] = i
-        self.solution_path = solution_path
+        if solution_path: self.solution_path = solution_path
     
     def commonDomain(self, domain = []):
         """
@@ -112,297 +112,310 @@ class CSP:
 
     def solve_dfs(self, timeout = 10):
         self.reset()
-        start = time.clock()
+        start = time.time()
         dfs(self, timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'dfs_Solution.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("dfs timed out")
-            wr += "dfs timed out"
-        elif self.stop == 0:
-            print("DFS: No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by dfs: ", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'dfs_Solution.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("dfs timed out")
+                wr += "dfs timed out"
+            elif self.stop == 0:
+                print("DFS: No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by dfs: ", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_BackTrack(self, timeout = 10):
         self.reset()
-        start = time.clock()
+        start = time.time()
         BackTrack(self, timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'BackTrack_Solution.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("BackTrack timed out")
-            wr += "BackTrack timed out"
-        elif self.stop == 0:
-            print("BackTrack: No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by BackTrack: ", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'BackTrack_Solution.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("BackTrack timed out")
+                wr += "BackTrack timed out"
+            elif self.stop == 0:
+                print("BackTrack: No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by BackTrack: ", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_ForwardChecking(self, timeout = 10):
         self.reset()
-        start = time.clock()
+        start = time.time()
         ForwardChecking(self, timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'ForwardChecking_Solution.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("ForwardChecking timed out")
-            wr += "ForwardChecking timed out"
-        elif self.stop == 0:
-            print("Forward Checking: No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by ForwardChecking: ", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'ForwardChecking_Solution.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("ForwardChecking timed out")
+                wr += "ForwardChecking timed out"
+            elif self.stop == 0:
+                print("Forward Checking: No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by ForwardChecking: ", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_ForwardChecking_MRV(self, timeout = 10):
         self.reset()
-        start = time.clock()
+        start = time.time()
         ForwardChecking_MRV(self, timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'ForwardChecking_MRV_Solution.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("ForwardChecking_MRV timed out")
-            wr += "ForwardChecking_MRV timed out"
-        elif self.stop == 0:
-            print("Forward Checking MRV: No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by ForwardChecking_MRV: ", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'ForwardChecking_MRV_Solution.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("ForwardChecking_MRV timed out")
+                wr += "ForwardChecking_MRV timed out"
+            elif self.stop == 0:
+                print("Forward Checking MRV: No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by ForwardChecking_MRV: ", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_ForwardChecking_MRV_LCV(self, timeout = 10):
         self.reset()
-        start = time.clock()
+        start = time.time()
         ForwardChecking_MRV_LCV(self, timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'ForwardChecking_MRV_LCV_Solution.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("ForwardChecking_MRV_LCV timed out")
-            wr += "ForwardChecking_MRV_LCV timed out"
-        elif self.stop == 0:
-            print("Forward Checking MRV and LCV: No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by ForwardChecking_MRV_LCV: ", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'ForwardChecking_MRV_LCV_Solution.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("ForwardChecking_MRV_LCV timed out")
+                wr += "ForwardChecking_MRV_LCV timed out"
+            elif self.stop == 0:
+                print("Forward Checking MRV and LCV: No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by ForwardChecking_MRV_LCV: ", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
     
     def solve_HillClimbing_chooseBest(self, memoization = True, iterations = big, allowedSideMoves = None, tabuSize = 0, timeout = 10):
         self.reset()
         if allowedSideMoves == None:
             allowedSideMoves = self.variables << 1
-        start = time.clock()
+        start = time.time()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.chooseBest, timeout = timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'HillClimbing_chooseBest.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("HillClimbing_chooseBest timed out")
-            wr += "HillClimbing_chooseBest timed out"
-        elif self.stop == 0:
-            print("HillClimbing_chooseBest: No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by HillClimbing_chooseBest:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'HillClimbing_chooseBest.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("HillClimbing_chooseBest timed out")
+                wr += "HillClimbing_chooseBest timed out"
+            elif self.stop == 0:
+                print("HillClimbing_chooseBest: No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by HillClimbing_chooseBest:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_HillClimbing_greedyBias(self, memoization = True, iterations = big, allowedSideMoves = None, tabuSize = 0, timeout = 10):
         self.reset()
         if allowedSideMoves == None:
             allowedSideMoves = self.variables << 1
-        start = time.clock()
+        start = time.time()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.greedyBias, timeout = timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'HillClimbing_greedyBias.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("HillClimbing_greedyBias timed out")
-            wr += "HillClimbing_greedyBias timed out"
-        elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by HillClimbing_greedyBias:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'HillClimbing_greedyBias.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("HillClimbing_greedyBias timed out")
+                wr += "HillClimbing_greedyBias timed out"
+            elif self.stop == 0:
+                print("No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by HillClimbing_greedyBias:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_HillClimbing_chooseRandom(self, memoization = True, iterations = big, allowedSideMoves = None, tabuSize = 0, timeout = 10):
         self.reset()
         if allowedSideMoves == None:
             allowedSideMoves = self.variables << 1
-        start = time.clock()
+        start = time.time()
         Hill_Climbing_with_restarts(obj = self, iterations=iterations, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, memoization=memoization, choice=choice.chooseRandom, timeout = timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'HillClimbing_chooseRandom.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("HillClimbing_chooseRandom timed out")
-            wr += "HillClimbing_chooseRandom timed out"
-        elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by HillClimbing_chooseRandom:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'HillClimbing_chooseRandom.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- memoization: " + str(memoization) + "; Allowed Number of Side Moves: " + str(allowedSideMoves) + "; Tabu List Size: " + str(tabuSize) + "; Allowed Number of iterations: " + str(iterations) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("HillClimbing_chooseRandom timed out")
+                wr += "HillClimbing_chooseRandom timed out"
+            elif self.stop == 0:
+                print("No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by HillClimbing_chooseRandom:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_GeneticAlgo(self, populationSize = None, generations = big, timeout = 10):
         self.reset()
         if populationSize == None:
             populationSize = self.variables << 1
-        start = time.clock()
+        start = time.time()
         Genetic_Solver(obj = self, populationSize = populationSize, generations = generations, timeout = timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'GeneticAlgorithm.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- Size of Population: " + str(populationSize) + "; Allowed Number of Generations " + str(generations) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("Genetic Algorithm timed out")
-            wr += "Genetic Algorithm timed out"
-        elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by Genetic Algorithm:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'GeneticAlgorithm.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- Size of Population: " + str(populationSize) + "; Allowed Number of Generations " + str(generations) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("Genetic Algorithm timed out")
+                wr += "Genetic Algorithm timed out"
+            elif self.stop == 0:
+                print("No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by Genetic Algorithm:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_local_beam_search(self, beams = None, timeout = 10):
         self.reset()
         if beams == None:
             beams = self.variables << 1
-        start = time.clock()
+        start = time.time()
         local_beam_search(obj = self, k = beams, timeout = timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'local_beam_search.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- Number of beams: " + str(beams) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("local beam search timed out")
-            wr += "local beam search timed out"
-        elif self.stop == 0:
-            print("Solution not found using local beam search")
-            wr += "Solution not found"
-        else :
-            print("Time taken by local beam search:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'local_beam_search.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- Number of beams: " + str(beams) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("local beam search timed out")
+                wr += "local beam search timed out"
+            elif self.stop == 0:
+                print("Solution not found using local beam search")
+                wr += "Solution not found"
+            else :
+                print("Time taken by local beam search:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_Simulated_Annealing(self, iterations = big, initialTemperature = 10000, cooling_coefficient = 1, timeout = 10):
         self.reset()
-        start = time.clock()
-        while time.clock() - start < timeout:
+        start = time.time()
+        while time.time() - start < timeout:
             simulated_annealing(obj = self, iterations=iterations, temperature=initialTemperature, decreaseConstant=cooling_coefficient, timeout = timeout)
             if self.stop == 1: break
-        end = time.clock()
-        f = open(self.solution_path + 'Simulated_Annealing.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- Initial Temperature: " + str(initialTemperature) + '; Cooling Coeffecient: ' + str(cooling_coefficient) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("Simulated Annealing timed out")
-            wr += "Simulated Annealing timed out"
-        elif self.stop == 0:
-            print("Solution not found using Simulated Annealing")
-            wr += "Solution not found"
-        else :
-            print("Time taken by Simulated Annealing:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'Simulated_Annealing.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- Initial Temperature: " + str(initialTemperature) + '; Cooling Coeffecient: ' + str(cooling_coefficient) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("Simulated Annealing timed out")
+                wr += "Simulated Annealing timed out"
+            elif self.stop == 0:
+                print("Solution not found using Simulated Annealing")
+                wr += "Solution not found"
+            else :
+                print("Time taken by Simulated Annealing:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_ArcConsistent_BackTracking(self, timeout = 10):
         self.reset()
-        start = time.clock()
+        start = time.time()
         ArcConsistent_MRV_LCV(obj = self, timeout = timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'ArcConsistent_BackTracking.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("Arc Consistent BackTracking timed out")
-            wr += "Arc Consistent BackTracking timed out"
-        elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by Arc Consistent BackTracking:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'ArcConsistent_BackTracking.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("Arc Consistent BackTracking timed out")
+                wr += "Arc Consistent BackTracking timed out"
+            elif self.stop == 0:
+                print("No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by Arc Consistent BackTracking:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def solve_novelAlgorithm(self, split = None, allowedSideMoves = None, tabuSize = 0, tries = None, timeout = 10):
         self.reset()
         if tries is None: tries = self.variables * 3
         if allowedSideMoves is None: allowedSideMoves = self.variables << 1
-        start = time.clock()
+        start = time.time()
         My_Algo(obj = self, split=split, allowedSideMoves=allowedSideMoves, tabuSize=tabuSize, tries = tries, timeout=timeout)
-        end = time.clock()
-        f = open(self.solution_path + 'novelAlgorithm.txt', 'w')
-        wr = self.problem_name + '\n'
-        wr += "Params- Split: " + str(split) + '; Allowed Number of Side Moves: ' + str(allowedSideMoves) + '; Size of Tabu List: ' + str(tabuSize) + '\n'
-        wr += 'Time Taken: ' + str(end - start) + '\n\n'
-        if end - start > timeout:
-            print ("Novel Algorithm timed out")
-            wr += "Novel Algorithm BackTracking timed out"
-        elif self.stop == 0:
-            print("No valid solution exist")
-            wr += "No valid solution exist"
-        else :
-            print("Time taken by Novel Algorithm:", end - start)
-            for i in range(1,self.variables + 1):
-                wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
-        f.write(wr)
-        f.close()
+        end = time.time()
+        if hasattr(self, 'solution_path'):
+            f = open(self.solution_path + 'novelAlgorithm.txt', 'w')
+            wr = self.problem_name + '\n'
+            wr += "Params- Split: " + str(split) + '; Allowed Number of Side Moves: ' + str(allowedSideMoves) + '; Size of Tabu List: ' + str(tabuSize) + '\n'
+            wr += 'Time Taken: ' + str(end - start) + '\n\n'
+            if end - start > timeout:
+                print ("Novel Algorithm timed out")
+                wr += "Novel Algorithm BackTracking timed out"
+            elif self.stop == 0:
+                print("No valid solution exist")
+                wr += "No valid solution exist"
+            else :
+                print("Time taken by Novel Algorithm:", end - start)
+                for i in range(1,self.variables + 1):
+                    wr += "value[" + str(self.variableConversion[i]) + "] : " + str(self.value[i]) + "\n"
+            f.write(wr)
+            f.close()
 
     def testAllDefaultParams(self, timeout = 10):
         self.solve_dfs(timeout = timeout)
