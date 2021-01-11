@@ -22,7 +22,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name='CSP_Solver',
-    version='0.1',
+    version='0.2',
     author='Sanskar Mani',
     author_email='mani.1@iitj.ac.in',
     packages=PACKAGES,

@@ -43,22 +43,42 @@ CSP Solver is a library designed to provide the functionalities to solve contstr
 > Novel Approach
 > solve_novelAlgorithm(self, split:int, allowedSideMoves:int, tabuSize:int, tries:int, timeout:int)
 
-> Run all methods
+> Run all methods on default parameters
 > testAllDefaultParams(self: CSP, timeout:int)
 
+### Example
+* *Initializing the class*
+```python
+import CSP_Solver as CS
+task = CS.CSP(variables=..., problem_name=..., solution_path=...)
+```
+* *Adding constraints specifying domains*
+```python
+'''
+Make sure that your constraint is python friendly
+'''
+task.addConstraint('value[1] != value[2]') # Example constraint
+# You may use this if the domain is common for all variables
+task.commonDomain(domain=[1,2,5,4]) 
+# You may want to add constraints sperately
+task.seperateDomain(variable=1,domain=[1,2]) 
+# You may want to set value of some variable
+task.setValue(variable=1, value=2)
+task.testAllDefaultParams(timeout=10)
+```
 ### Reports
 * [Report](https://drive.google.com/file/d/1MkcQGpeX8d3Qng5sB2CW_B0oS5HVSeKy/view?usp=sharing)
 * [Presentation](https://drive.google.com/file/d/1gMElklxYo2P_uIFUzBrgsuGk1OvaAOQR/view?usp=sharing)
 
 ### Installation
 Install package from Pypi
-```sh
+```bash
 $ pip install CSP-Solver
 ```
 
 To test examples
 
-```sh
+```bash
 $ git clone https://github.com/LezendarySandwich/Generic-CSP-Solver.git
 $ cd Generic-CSP-Solver/Examples
 $ python3 [Example]
