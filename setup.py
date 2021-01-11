@@ -20,13 +20,16 @@ for folder in os.listdir(CSP_Solver_path):
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+short_description = 'Library to solve Constraint satisfation problems'
+
 setup(
     name='CSP_Solver',
-    version='0.2',
+    version='0.1.1',
     author='Sanskar Mani',
     author_email='mani.1@iitj.ac.in',
     packages=PACKAGES,
     install_requires=REQUIRED,
+    description=short_description,
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/LezendarySandwich/Generic-CSP-Solver',
