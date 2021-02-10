@@ -1,0 +1,27 @@
+.footerStyle {
+    display: flex;
+    height: 12vh;
+    width: 100%;
+    margin-top: 3%;
+    justify-content: flex-start;
+}
+.logo {
+    margin-top: -1.7%;
+    display: flex;
+    margin-left: 1%;
+}
+.linkdin-sanskar{
+    display: flex;
+    width: 25%;
+    margin-left: 39%;
+}
+.linkdin-dhruv{
+    display: flex;
+    width: 20%;
+    margin-left: 1%;
+}
+.mailto{
+    display: flex;
+    width: 20%;
+    margin-left: 40%;
+}
