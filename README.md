@@ -83,6 +83,11 @@ $ git clone https://github.com/LezendarySandwich/Generic-CSP-Solver.git
 $ cd Generic-CSP-Solver/Examples
 $ python3 [Example]
 ```
+
+### Test Functionality
+
+https://csp-web.herokuapp.com/
+
 License
 ----
 
