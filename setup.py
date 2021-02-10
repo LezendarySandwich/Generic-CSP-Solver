@@ -24,7 +24,7 @@ short_description = 'Library to solve Constraint satisfation problems'
 
 setup(
     name='CSP_Solver',
-    version='0.1.1',
+    version='0.1.2',
     author='Sanskar Mani',
     author_email='mani.1@iitj.ac.in',
     packages=PACKAGES,
